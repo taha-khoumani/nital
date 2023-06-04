@@ -16,7 +16,8 @@ module.exports = {
       colors:{
         "black":"#25282E",
         "gray":"#393E46",
-        "orange":"#FE552D"
+        "orange":"#FE552D",
+        "link":"#016BF8",
       },
       padding:{
         "3px":"3px",
