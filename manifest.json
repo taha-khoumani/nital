@@ -1,9 +1,12 @@
 {
     "manifest_version": 3,
-    "name": "My Extension",
-    "version": "1.0.1",
+    "name": "Nital",
+    "version": "0.0.2",
+    "icons":{
+        "128":"./assets/logo_icon.png"
+    },
     "action":{
-        "default_popup":"./popup/index.html",
-        "default_icon":"./assets/logo.png"
+        "default_popup":"./popup/popup.html",
+        "default_icon":"./assets/logo_icon.png"
     }
 }

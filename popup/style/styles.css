@@ -2,5 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background-color: red;
+  font-family: "Nunito", sans-serif;
+}
+
+.language {
+  @apply flex items-center gap-10px;
+}
+.language .language-box {
+  @apply outline-2 outline-gray border-solid accent-orange cursor-pointer;
+}
+.language .language-label {
+  @apply text-gray text-sm cursor-pointer;
 }
