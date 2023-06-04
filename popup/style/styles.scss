@@ -6,8 +6,9 @@ body{
     font-family: 'Nunito', sans-serif;
 }
 
+
 .language{
-    @apply flex items-center gap-10px;
+    @apply flex items-center gap-10px ;
 
     .language-box{
         @apply outline-2 outline-gray border-solid accent-orange cursor-pointer;
@@ -15,4 +16,18 @@ body{
     .language-label{
         @apply text-gray text-sm cursor-pointer;
     }
+}
+
+.toggler{
+    @apply w-full text-center p-6px rounded-full cursor-pointer;
+    p{
+        @apply text-lg;
+    }
+}
+
+#plus-div:hover path{
+    @apply fill-white;
+}
+#dropdown:hover img{
+    filter: brightness(0) invert(1);
 }

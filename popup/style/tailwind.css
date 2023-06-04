@@ -522,8 +522,17 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .flex {
   display: flex;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-2px {
@@ -538,12 +547,12 @@ video {
   height: 1rem;
 }
 
-.max-h-full {
-  max-height: 100%;
+.h-5 {
+  height: 1.25rem;
 }
 
-.max-h-72 {
-  max-height: 18rem;
+.h-full {
+  height: 100%;
 }
 
 .max-h-64 {
@@ -566,16 +575,20 @@ video {
   width: 1rem;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-full {
   width: 100%;
 }
 
-.max-w-full {
-  max-width: 100%;
-}
-
 .flex-grow {
   flex-grow: 1;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .flex-col {
@@ -588,6 +601,10 @@ video {
 
 .gap-10px {
   gap: 10px;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-4 {
@@ -618,8 +635,20 @@ video {
   border-radius: 9999px;
 }
 
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
 .border-2 {
   border-width: 2px;
+}
+
+.border-3px {
+  border-width: 3px;
+}
+
+.border-l-2 {
+  border-left-width: 2px;
 }
 
 .border-r-2 {
@@ -634,6 +663,11 @@ video {
 .border-orange {
   --tw-border-opacity: 1;
   border-color: rgb(254 85 45 / var(--tw-border-opacity));
+}
+
+.border-l-gray {
+  --tw-border-opacity: 1;
+  border-left-color: rgb(57 62 70 / var(--tw-border-opacity));
 }
 
 .bg-black {
@@ -662,9 +696,22 @@ video {
   background-repeat: no-repeat;
 }
 
+.p-11px {
+  padding: 11px;
+}
+
+.p-3px {
+  padding: 3px;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .px-6 {
@@ -680,6 +727,11 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pb-6 {
@@ -765,6 +817,32 @@ body {
   line-height: 1.25rem;
   --tw-text-opacity: 1;
   color: rgb(57 62 70 / var(--tw-text-opacity));
+}
+
+.toggler {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 9999px;
+  padding: 6px;
+  text-align: center;
+}
+
+.toggler p {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+#plus-div:hover path {
+  fill: #fff;
+}
+
+#dropdown:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.hover\:bg-gray:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(57 62 70 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-white:hover {

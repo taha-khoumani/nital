@@ -4,11 +4,13 @@ module.exports = {
   theme: {
     extend: {
       width:{
+        "18px":"18px",
         "100px":"100px",
         "359px":"359px",
       },
       height:{
         "2px":"2px",
+        "18px":"18px",
         "37px":"37px",
       },
       colors:{
@@ -18,10 +20,15 @@ module.exports = {
       },
       padding:{
         "3px":"3px",
+        "6px":"6px",
         "10px":"10px",
+        "11px":"11px",
       },
       gap:{
         "10px":"10px"
+      },
+      borderWidth:{
+        "3px":"3px",
       }
     },
   },

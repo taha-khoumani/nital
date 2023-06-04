@@ -13,21 +13,78 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap" rel="stylesheet">
-
-
-    <script src="https://kit.fontawesome.com/d2a31f31ee.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="px-8 w-359px flex flex-col items-center gap-8">
 
         <!-- header -->
         <div class="w-full flex flex-col items-center pt-4 gap-4">
+
+            <!-- logo -->
             <div class="w-100px h-37px bg-contain bg-no-repeat bg-center" style="background-image: url(../assets/logo.png);"></div>
+
+            <!-- seperator -->
             <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
+
         </div>
 
-        <!-- main -->
-        <div class="flex flex-col gap-8 pb-6">
+        <!-- home -->
+        <div class="w-full flex flex-col gap-8">
+
+            <!-- ON/OFF toggler -->
+            <div class="border-3px border-gray rounded-full w-full p-3px flex">
+                <div class="toggler bg-orange">
+                    <p class="text-white">ON</p>
+                </div>
+                <div class="toggler">
+                    <p class="text-gray">OFF</p>
+                </div>
+            </div>
+
+            <!-- seperator -->
+            <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
+
+            <!-- dropdown-section -->
+            <div class="flex flex-col gap-4">
+
+                <!-- character-left-counter -->
+                <p class="text-black text-sm">Number of characters to translate left: 2000</p>
+
+                <!-- dropdown-div -->
+                <div class="flex gap-2 items-center">
+
+                    <!-- dropdown -->
+                    <div class="flex border-2 border-gray rounded-lg w-full">
+
+                        <!-- selected-language -->
+                        <div class="my-auto w-full h-full px-6">
+                            <p class="text-gray text-sm">Arabic / العربية</p>
+                        </div>
+
+                        <!-- dropdown-arrow -->
+                        <div id="dropdown" class="border-l-2 border-l-gray py-4 px-4 transition cursor-pointer hover:bg-gray">
+                            <img class="transition" src="/assets/dropdown.png" alt="dropdown">
+                        </div>
+
+                    </div>
+
+                    <!-- add-language -->
+                    <div id="plus-div" class="border-2 border-gray rounded-lg p-11px cursor-pointer hover:bg-gray transition">
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path class="transition" fill="#393E46" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- seperator -->
+            <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
+
+        </div>
+
+        
+        <!-- language-customization-section -->
+        <div class="hidden flex-col gap-8 pb-6">
 
             <!-- language select -->
             <div class="flex flex-col gap-6">
@@ -188,7 +245,7 @@
             <button class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition">Save</button>
 
         </div>
-
+        
     </div>
 </body>
 </html>
