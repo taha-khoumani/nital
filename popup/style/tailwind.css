@@ -522,6 +522,31 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.inset-x-0 {
+  left: 0px;
+  right: 0px;
+}
+
+.bottom-6 {
+  bottom: 1.5rem;
+}
+
+.top-0 {
+  top: 0px;
+}
+
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
@@ -682,6 +707,16 @@ video {
 .bg-orange {
   --tw-bg-opacity: 1;
   background-color: rgb(254 85 45 / var(--tw-bg-opacity));
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75 {

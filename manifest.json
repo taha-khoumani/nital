@@ -8,5 +8,6 @@
     "action":{
         "default_popup":"./popup/popup.html",
         "default_icon":"./assets/logo_icon.png"
-    }
+    },
+    "permissions": ["storage"]
 }
