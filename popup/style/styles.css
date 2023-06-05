@@ -22,8 +22,8 @@ body {
   @apply text-lg;
 }
 
-#plus-div:hover path {
-  @apply fill-white;
+#currentLanguageShownContainer:hover p {
+  @apply text-white;
 }
 
 #dropdown:hover img {

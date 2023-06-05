@@ -25,8 +25,8 @@ body{
     }
 }
 
-#plus-div:hover path{
-    @apply fill-white;
+#currentLanguageShownContainer:hover p{
+    @apply text-white;
 }
 #dropdown:hover img{
     filter: brightness(0) invert(1);

@@ -1,5 +1,7 @@
 // GLOBAL-VARIABLES
     const state = 'on'
+    const currentLanguageShown = selectElement('#currentLanguageShown')
+    const languagesInputs = Array.from(document.querySelectorAll(".language-box"))
 // 
 
 
@@ -20,7 +22,7 @@
 // HOME-TO-LANGUAGES_SELECT-TOGGLING
     // Variables
     const home = selectElement("#home")
-    const plusButton = selectElement("#plus-div")
+    const currentLanguageShownContainer = selectElement("#currentLanguageShownContainer")
     const languagesSection = selectElement("#language-selection")
     const saveButton = selectElement("#save-languages")
 
@@ -28,21 +30,18 @@
     function goToLanguagesSection(){
         removeAddClass(languagesSection,"hidden","flex")
         removeAddClass(home,"flex","hidden")
+        saveButton.innerText = "Go back"
     }
     function goToHome(){
         removeAddClass(home,"hidden","flex")
         removeAddClass(languagesSection,"flex","hidden")
     }
     function onSaveHandler(){
-        // store in local storage
-        chrome.storage.local.set({selectedLanguages:selectedLanguages})
-
-        //go to home
         goToHome()
     }
 
     // Dom
-    plusButton.addEventListener('click',goToLanguagesSection)
+    currentLanguageShownContainer.addEventListener('click',goToLanguagesSection)
     saveButton.addEventListener('click',onSaveHandler)
 //
 
@@ -50,50 +49,98 @@
 
 // LANGUAGES-SELECTION
     // Variables
-    let selectedLanguages = []
+    let selectedLanguage = ""
+
+    // On load
     chrome.storage.local.get(
-        'selectedLanguages', 
+        'selectedLanguage',
         (result) => {
-            selectedLanguages = result.selectedLanguages
+            // Variables
+            const selectedLanguage = result.selectedLanguage
+
+            // if it's the user first visit
+            if(!selectedLanguage){
+                saveButton.innerText = "Continue"
+                return
+            } 
+
+            // Conditional variables 
+            const radioButtonMatchingCurrentLanguage = languagesInputs.find(language=> language.value === selectedLanguage )
+            
+            // Check the stored language on the form
+            radioButtonMatchingCurrentLanguage.checked = true
+
+            // update the currentLanguageShown in home
+            currentLanguageShown.innerText = radioButtonMatchingCurrentLanguage.labels[0].textContent
+
+            // navigate to home
+            goToHome()
+            
         }
     );
-    const languagesInputs = Array.from(document.querySelectorAll(".language-box"))
-    const languagesCounter = selectElement("#languages-counter")
 
-    // Event listener funtions
+    // On change
     function onLanguageChangeHandler(e){
+        // Variables
+        const clickedRadio = e.target
         const clickedLanguage = e.target.value
-        const isSelecting = e.target.checked
 
-        // modify the selectedLanguage var
-        if(isSelecting){
-            selectedLanguages.push(clickedLanguage)
-        } else{
-            selectedLanguages = selectedLanguages.filter(language=>language !== clickedLanguage)
-        }
+        // Update local variable and localStorage variable
+        selectedLanguage = clickedLanguage
+        chrome.storage.local.set({selectedLanguage:clickedLanguage})
         
-        // modify the counter
-        languagesCounter.innerText = selectedLanguages.length
+        // update the currentLanguageShown in home
+        currentLanguageShown.innerText = clickedRadio.labels[0].textContent
+        
     }
 
     // Dom
     languagesInputs.forEach(language=>language.addEventListener('change',onLanguageChangeHandler))
 // 
 
-// const x = selectElement('#currentLanguage')
-// x.addEventListener('click',function(){
 
-//     chrome.storage.local.get(
-//         'selectedLanguages', 
-//         (result) => {
-//             console.log(result.selectedLanguages)
-//         }
-//     );
-// })
+
+// TESTING
+    const logo = selectElement("#logo")
+    logo.addEventListener("click",()=>{
+        chrome.storage.local.clear();
+    })
+    logo.addEventListener("contextmenu",()=>{
+        chrome.storage.local.get(
+            'selectedLanguage', 
+            (result) => {
+                console.log(result)
+            }
+        );
+    })
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 /*
+
 // ON-OFF-TOGGLING
 
     // Variables
@@ -109,4 +156,5 @@
     off.addEventListener('click',onOnHandler)
 
 // 
+
 */

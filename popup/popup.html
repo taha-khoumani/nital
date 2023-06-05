@@ -21,7 +21,7 @@
         <div class="w-full flex flex-col items-center pt-4 gap-4">
 
             <!-- logo -->
-            <div class="w-100px h-37px bg-contain bg-no-repeat bg-center" style="background-image: url(../assets/logo.png);"></div>
+            <div id="logo" class="w-100px h-37px bg-contain bg-no-repeat bg-center" style="background-image: url(../assets/logo.png);"></div>
 
             <!-- seperator -->
             <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
@@ -29,7 +29,7 @@
         </div>
 
         <!-- main -->
-        <div class="relative">
+        <div class="relative w-full">
 
             <!-- home -->
             <div id="home" class="w-full hidden flex-col gap-8">
@@ -44,57 +44,15 @@
                     </div>
                 </div>
     
-                <!-- seperator -->
-                <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
-    
-                <!-- dropdown-section -->
-                <div class="flex flex-col gap-4">
-    
-                    <!-- character-left-counter -->
-                    <p class="text-black text-sm">Number of characters to translate left: 2000</p>
-    
-                    <!-- dropdown-div -->
-                    <div class="flex gap-2 items-center">
-    
-                        <!-- dropdown -->
-                        <div class="flex border-2 border-gray rounded-lg w-full">
-    
-                            <!-- selected-language -->
-                            <div class="my-auto w-full h-full px-6">
-                                <p id="currentLanguage" class="text-gray text-sm">
-                                    Arabic / العربية
-                                </p>
-                            </div>
-    
-                            <!-- dropdown-arrow -->
-                            <div id="dropdown" class="border-l-2 border-l-gray py-4 px-4 transition cursor-pointer hover:bg-gray">
-                                <img class="transition" src="/assets/dropdown.png" alt="dropdown">
-                            </div>
-    
-                        </div>
-    
-                        <!-- add-language -->
-                        <div id="plus-div" class="border-2 border-gray rounded-lg p-11px cursor-pointer hover:bg-gray transition">
-                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path class="transition" fill="#393E46" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                        </div>
-    
-                    </div>
-    
+                <!-- dropdown -->
+                <div 
+                    id="currentLanguageShownContainer" 
+                    class="flex items-center border-2 border-gray rounded-lg w-full h-10 px-6 cursor-pointer hover:bg-gray hover:text-white transition"
+                >
+                    <p id="currentLanguageShown" class="text-gray text-sm my-auto"></p>
                 </div>
     
-                <!-- seperator -->
-                <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
-    
-                <!-- premium -->
-                <div class="flex flex-col gap-2 items-center">
-                    <p class="text-sm text-black">Want unlimited characters to translate ?</p>
-                    <button class="bg-orange rounded-full w-full text-white text-sm py-2 border-2 hover:bg-white hover:text-orange hover:border-orange transition">GO PREMIUM !</button>
-                    <p class="text-sm text-black">
-                        Already have an account ?
-                        <a class="ml-11 text-link underline" href="">Log in</a>
-                    </p>
-                </div>
-    
+
             </div>
     
             <!-- language-customization-section -->
@@ -104,7 +62,7 @@
                 <div class="flex flex-col gap-6">
     
                     <!-- counter -->
-                    <p class="text-sm text-black">Select The Language(s) your interested in: <span id="languages-counter">0</span></p>
+                    <p class="text-sm text-black">Select the language your interested in :</p>
     
                     <!-- search bar -->
                     <div class="border-2 rounded-full border-gray flex overflow-hidden">
@@ -117,137 +75,137 @@
                     <!-- languages -->
                     <div class="flex flex-col gap-10px px-2 flex-grow max-h-64 overflow-scroll overflow-x-hidden">
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="arabic" id="arabic">
+                            <input class="language-box" type="radio" name="language" value="arabic" id="arabic">
                             <label class="language-label" for="arabic">Arabic / العربية</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="bengali" id="bengali">
+                            <input class="language-box" type="radio" name="language" value="bengali" id="bengali">
                             <label class="language-label" for="bengali">Bengali / বাংলা</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="burmese" id="burmese">
+                            <input class="language-box" type="radio" name="language" value="burmese" id="burmese">
                             <label class="language-label" for="burmese">Burmese / ဗမာ</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="chinese_simplified" id="chinese_simplified">
+                            <input class="language-box" type="radio" name="language" value="chinese_simplified" id="chinese_simplified">
                             <label class="language-label" for="chinese_simplified">Chinese (Simplified) / 中文 (简体)</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="chinese_traditional" id="chinese_traditional">
+                            <input class="language-box" type="radio" name="language" value="chinese_traditional" id="chinese_traditional">
                             <label class="language-label" for="chinese_traditional">Chinese (Traditional) / 中文 (繁體)</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="gujarati" id="gujarati">
+                            <input class="language-box" type="radio" name="language" value="gujarati" id="gujarati">
                             <label class="language-label" for="gujarati">Gujarati / ગુજરાતી</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="hindi" id="hindi">
+                            <input class="language-box" type="radio" name="language" value="hindi" id="hindi">
                             <label class="language-label" for="hindi">Hindi / हिन्दी</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="japanese" id="japanese">
+                            <input class="language-box" type="radio" name="language" value="japanese" id="japanese">
                             <label class="language-label" for="japanese">Japanese / 日本語</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="kannada" id="kannada">
+                            <input class="language-box" type="radio" name="language" value="kannada" id="kannada">
                             <label class="language-label" for="kannada">Kannada / ಕನ್ನಡ</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="khmer" id="khmer">
+                            <input class="language-box" type="radio" name="language" value="khmer" id="khmer">
                             <label class="language-label" for="khmer">Khmer / ភាសាខ្មែរ</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="korean" id="korean">
+                            <input class="language-box" type="radio" name="language" value="korean" id="korean">
                             <label class="language-label" for="korean">Korean / 한국어</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="malayalam" id="malayalam">
+                            <input class="language-box" type="radio" name="language" value="malayalam" id="malayalam">
                             <label class="language-label" for="malayalam">Malayalam / മലയാളം</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="marathi" id="marathi">
+                            <input class="language-box" type="radio" name="language" value="marathi" id="marathi">
                             <label class="language-label" for="marathi">Marathi / मराठी</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="nepali" id="nepali">
+                            <input class="language-box" type="radio" name="language" value="nepali" id="nepali">
                             <label class="language-label" for="nepali">Nepali / नेपाली</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="odia" id="odia">
+                            <input class="language-box" type="radio" name="language" value="odia" id="odia">
                             <label class="language-label" for="odia">Odia / ଓଡ଼ିଆ</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="pashto" id="pashto">
+                            <input class="language-box" type="radio" name="language" value="pashto" id="pashto">
                             <label class="language-label" for="pashto">Pashto / پښتو</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="persian" id="persian">
+                            <input class="language-box" type="radio" name="language" value="persian" id="persian">
                             <label class="language-label" for="persian">Persian / فارسی</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="punjabi" id="punjabi">
+                            <input class="language-box" type="radio" name="language" value="punjabi" id="punjabi">
                             <label class="language-label" for="punjabi">Punjabi / ਪੰਜਾਬੀ</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="russian" id="russian">
+                            <input class="language-box" type="radio" name="language" value="russian" id="russian">
                             <label class="language-label" for="russian">Russian / русский</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="sanskrit" id="sanskrit">
+                            <input class="language-box" type="radio" name="language" value="sanskrit" id="sanskrit">
                             <label class="language-label" for="sanskrit">Sanskrit / संस्कृतम्</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="sindhi" id="sindhi">
+                            <input class="language-box" type="radio" name="language" value="sindhi" id="sindhi">
                             <label class="language-label" for="sindhi">Sindhi / سنڌي</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="sinhala" id="sinhala">
+                            <input class="language-box" type="radio" name="language" value="sinhala" id="sinhala">
                             <label class="language-label" for="sinhala">Sinhala / සිංහල</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="tamil" id="tamil">
+                            <input class="language-box" type="radio" name="language" value="tamil" id="tamil">
                             <label class="language-label" for="tamil">Tamil / தமிழ்</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="telugu" id="telugu">
+                            <input class="language-box" type="radio" name="language" value="telugu" id="telugu">
                             <label class="language-label" for="telugu">Telugu / తెలుగు</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="thai" id="thai">
+                            <input class="language-box" type="radio" name="language" value="thai" id="thai">
                             <label class="language-label" for="thai">Thai / ไทย</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="urdu" id="urdu">
+                            <input class="language-box" type="radio" name="language" value="urdu" id="urdu">
                             <label class="language-label" for="urdu">Urdu / اردو</label>
                         </div>
                         
                         <div class="language">
-                            <input class="language-box" type="checkbox" value="uzbek" id="uzbek">
+                            <input class="language-box" type="radio" name="language" value="uzbek" id="uzbek">
                             <label class="language-label" for="uzbek">Uzbek / Oʻzbek</label>
                         </div>
                         
@@ -256,7 +214,7 @@
                 </div>
     
                 <!-- save -->
-                <button id="save-languages" class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition">Save</button>
+                <button id="save-languages" class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition">Go back</button>
     
             </div>
 
