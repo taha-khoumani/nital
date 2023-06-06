@@ -15,7 +15,7 @@ function checkGoogle(){
             }else{
                 goToHomeIfOnGoogle()
             }
-        }
+        } 
     );
 }
 
