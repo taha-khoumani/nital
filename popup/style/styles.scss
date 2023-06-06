@@ -31,3 +31,17 @@ body{
 #dropdown:hover img{
     filter: brightness(0) invert(1);
 }
+
+.state{
+    @apply bg-orange text-white;
+}
+
+.disabled{
+    @apply opacity-25 cursor-not-allowed;
+    & {
+        p{
+            color: gray !important;
+        }
+        background-color: white !important;
+    }
+}

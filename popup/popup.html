@@ -35,12 +35,12 @@
             <div id="home" class="w-full hidden flex-col gap-8">
     
                 <!-- ON/OFF toggler -->
-                <div class="border-3px border-gray rounded-full w-full p-3px flex">
-                    <div id="on" class="toggler bg-orange">
-                        <p class="text-white">ON</p>
+                <div class="border-3px border-gray rounded-full w-full p-3px flex text-gray">
+                    <div id="on" class="toggler state">
+                        <p>ON</p>
                     </div>
                     <div id="off" class="toggler">
-                        <p class="text-gray">OFF</p>
+                        <p>OFF</p>
                     </div>
                 </div>
     
@@ -73,9 +73,9 @@
                     </div>
     
                     <!-- languages -->
-                    <div class="flex flex-col gap-10px px-2 flex-grow max-h-64 overflow-scroll overflow-x-hidden">
+                    <form id="languagesForm" class="flex flex-col gap-10px px-2 flex-grow max-h-64 overflow-scroll overflow-x-hidden">
                         <div class="language">
-                            <input class="language-box" type="radio" name="language" value="arabic" id="arabic">
+                            <input class="language-box" type="radio" required name="language" value="arabic" id="arabic">
                             <label class="language-label" for="arabic">Arabic / العربية</label>
                         </div>
                         
@@ -209,12 +209,19 @@
                             <label class="language-label" for="uzbek">Uzbek / Oʻzbek</label>
                         </div>
                         
-                    </div>
+                    </form>
     
                 </div>
     
                 <!-- save -->
-                <button id="save-languages" class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition">Go back</button>
+                <button 
+                    id="save-languages" 
+                    class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition"
+                    type="submit"
+                    form="languagesForm"
+                >
+                    Go back
+                </button>
     
             </div>
 

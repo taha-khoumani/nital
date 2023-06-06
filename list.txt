@@ -1,5 +1,5 @@
 -search bar
--validation : have to select one
+-animate the on/off button
 
 
 

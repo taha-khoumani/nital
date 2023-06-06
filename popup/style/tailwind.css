@@ -810,6 +810,23 @@ body {
   filter: brightness(0) invert(1);
 }
 
+.state {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 85 45 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.25;
+  background-color: white !important;
+}
+
+.disabled p {
+  color: gray !important;
+}
+
 .hover\:bg-gray:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(57 62 70 / var(--tw-bg-opacity));

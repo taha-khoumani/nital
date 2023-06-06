@@ -1,5 +1,4 @@
 // GLOBAL-VARIABLES
-    const state = 'on'
     const currentLanguageShown = selectElement('#currentLanguageShown')
     const languagesInputs = Array.from(document.querySelectorAll(".language-box"))
 // 
@@ -12,8 +11,8 @@
     }
 
     function removeAddClass(element,removedClass,addedClass){
-        element.classList.remove(removedClass)
-        element.classList.add(addedClass)
+        if(removeAddClass) element.classList.remove(removedClass);
+        if(addedClass) element.classList.add(addedClass);
     }
 // 
 
@@ -25,9 +24,16 @@
     const currentLanguageShownContainer = selectElement("#currentLanguageShownContainer")
     const languagesSection = selectElement("#language-selection")
     const saveButton = selectElement("#save-languages")
+    const form = selectElement("#languagesForm")
+ 
+    // 1TimesRuns
+    form.addEventListener("submit",(e)=>e.preventDefault())
 
     // Event listener funtions
     function goToLanguagesSection(){
+        // check if the toggler is off
+        if(state === "off") return;
+
         removeAddClass(languagesSection,"hidden","flex")
         removeAddClass(home,"flex","hidden")
         saveButton.innerText = "Go back"
@@ -37,6 +43,7 @@
         removeAddClass(languagesSection,"flex","hidden")
     }
     function onSaveHandler(){
+        if(!form.checkValidity()) return;
         goToHome()
     }
 
@@ -100,6 +107,68 @@
 
 
 
+// ON-OFF-TOGGLING
+
+    // Variables
+    let state;
+    const on = selectElement("#on")
+    const off = selectElement("#off")
+
+    // On load
+    chrome.storage.local.get(
+        'state',
+        (result) => {
+            // if it's the user first visit 
+            if(!result.state){
+                state = "on"
+                chrome.storage.local.set({state:"on"})
+            }else{
+                // Variables
+                state = result.state
+
+                if(state === 'on') return;
+                onOffHandler()
+            }
+
+            
+            
+        }
+    );
+
+    //Event listener funtions
+    function onOffHandler(){
+        // Update global variable
+        state = "off"
+
+        // Store to localStorage
+        chrome.storage.local.set({state:"off"})
+
+        // Update UI
+        removeAddClass(on,'state',false)
+        removeAddClass(off,false,'state')
+        removeAddClass(currentLanguageShownContainer,false,'disabled')
+    }    
+    function onOnHandler(){
+        // Update global variable
+        state = "on"
+
+        // Store to localStorage
+        chrome.storage.local.set({state:"on"})
+
+        // Update UI
+        removeAddClass(on,false,'state')
+        removeAddClass(off,'state',false)
+        removeAddClass(currentLanguageShownContainer,'disabled',false)
+    }    
+
+    // Dom
+    off.addEventListener('click',onOffHandler)
+    on.addEventListener('click',onOnHandler)
+
+// 
+
+
+
 // TESTING
     const logo = selectElement("#logo")
     logo.addEventListener("click",()=>{
@@ -112,49 +181,11 @@
                 console.log(result)
             }
         );
+        chrome.storage.local.get(
+            'state', 
+            (result) => {
+                console.log(result)
+            }
+        );
     })
 // 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-// ON-OFF-TOGGLING
-
-    // Variables
-    const on = selectElement("#on")
-    const off = selectElement("#off")
-
-    //Event listener funtions
-    function onOffHandler(){}    
-    function onOnHandler(){}    
-
-    // Dom
-    off.addEventListener('click',onOffHandler)
-    off.addEventListener('click',onOnHandler)
-
-// 
-
-*/
