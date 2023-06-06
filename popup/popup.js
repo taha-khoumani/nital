@@ -44,6 +44,10 @@
     }
     function onSaveHandler(){
         if(!form.checkValidity()) return;
+        
+        state = "on"
+        chrome.storage.local.set({state:"on"})
+        onOnScript()
         goToHome()
     }
 
@@ -119,23 +123,44 @@
         'state',
         (result) => {
             // if it's the user first visit 
-            if(!result.state){
-                state = "on"
-                chrome.storage.local.set({state:"on"})
-            }else{
-                // Variables
-                state = result.state
+            if(!result.state)return;
 
-                if(state === 'on') return;
-                onOffHandler()
-            }
 
+            // Variables
+            state = result.state
+
+            if(state === 'on') return;
+            onOffHandler()
             
             
         }
     );
 
-    //Event listener funtions
+    //Event listener funtions      
+    function onOnScript() {
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
+            var activeTab = tabs[0];
+            chrome.tabs.sendMessage(activeTab.id, {"message": "on"});
+        });
+    }
+    function onOnHandler(){
+        // Update global variable
+        state = "on"
+
+        // Store to localStorage
+        chrome.storage.local.set({state:"on"})
+
+        // Update popup UI
+        removeAddClass(on,false,'state')
+        removeAddClass(off,'state',false)
+        removeAddClass(currentLanguageShownContainer,'disabled',false)
+    } 
+    function onOffScript() {
+        chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
+            var activeTab = tabs[0];
+            chrome.tabs.sendMessage(activeTab.id, {"message": "off"});
+        });
+    }
     function onOffHandler(){
         // Update global variable
         state = "off"
@@ -147,23 +172,13 @@
         removeAddClass(on,'state',false)
         removeAddClass(off,false,'state')
         removeAddClass(currentLanguageShownContainer,false,'disabled')
-    }    
-    function onOnHandler(){
-        // Update global variable
-        state = "on"
-
-        // Store to localStorage
-        chrome.storage.local.set({state:"on"})
-
-        // Update UI
-        removeAddClass(on,false,'state')
-        removeAddClass(off,'state',false)
-        removeAddClass(currentLanguageShownContainer,'disabled',false)
-    }    
+    } 
 
     // Dom
-    off.addEventListener('click',onOffHandler)
+    document.addEventListener("DOMContentLoaded", ()=>on.addEventListener("click", onOnScript));
     on.addEventListener('click',onOnHandler)
+    document.addEventListener("DOMContentLoaded", ()=>off.addEventListener("click", onOffScript));
+    off.addEventListener('click',onOffHandler)
 
 // 
 

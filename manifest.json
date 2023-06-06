@@ -9,11 +9,12 @@
         "default_popup":"./popup/popup.html",
         "default_icon":"./assets/logo_icon.png"
     },
-    "permissions": ["storage"],
+    "permissions": ["storage","tabs"],
     "content_scripts":[
         {
             "matches":["<all_urls>"],
-            "css": ["./content_scripts/allUrls.css"],
+            "css": ["content_scripts/allUrls.css"],
+            "js": ["content_scripts/allUrls.js"],
             "all_frames": true
         }
     ]

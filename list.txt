@@ -1,4 +1,5 @@
 -search bar
+-scroll to selected language
 -animate the on/off button
 
 

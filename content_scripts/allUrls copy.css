@@ -1,8 +1,0 @@
-input,textarea{
-    border: 2px solid #FE552D !important;
-    border-radius: 8px !important;
-}
-input:focus,textarea:focus{
-    border: 3px solid #FE552D !important;
-    border-radius: 8px !important;
-}
