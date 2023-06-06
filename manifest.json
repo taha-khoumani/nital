@@ -18,8 +18,7 @@
             "all_frames": true
         }
     ],
-    "chrome_settings_overrides": {
-        "homepage": "https://www.google.com",
-        "startup_pages": ["https://www.google.com"]
+    "background": {
+        "service_worker": "background.js"
     }
 }

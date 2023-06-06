@@ -14,6 +14,40 @@
         if(removeAddClass) element.classList.remove(removedClass);
         if(addedClass) element.classList.add(addedClass);
     }
+
+    function checkGoogle(){
+        chrome.storage.local.get(
+            'state',
+            (result) => {
+                // Vars
+                const state = result.state
+    
+                if(state === "on"){
+                    goToGoolgeIfOnHome()
+                }else{
+                    goToHomeIfOnGoogle()
+                }
+            }
+        );
+    }
+    
+    function goToGoolgeIfOnHome(){
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            const tab = tabs[0];
+            if (!tab.url || tab.url === "chrome://newtab/") {
+              chrome.tabs.update({ url: "https://www.google.com" });
+            }
+        }); 
+    }
+    
+    function goToHomeIfOnGoogle(){
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            const tab = tabs[0];
+            if (tab.url === "https://www.google.com/") {
+              chrome.tabs.update({ url: "chrome://newtab/" });
+            }
+        }); 
+    }
 // 
 
 
@@ -44,7 +78,7 @@
     }
     function onSaveHandler(){
         if(!form.checkValidity()) return;
-        
+
         state = "on"
         chrome.storage.local.set({state:"on"})
         onOnScript()
@@ -154,6 +188,9 @@
         removeAddClass(on,false,'state')
         removeAddClass(off,'state',false)
         removeAddClass(currentLanguageShownContainer,'disabled',false)
+
+        // Navigate to Google.com if needed
+        checkGoogle()
     } 
     function onOffScript() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
@@ -172,6 +209,9 @@
         removeAddClass(on,'state',false)
         removeAddClass(off,false,'state')
         removeAddClass(currentLanguageShownContainer,false,'disabled')
+
+        // Navigate to Home if needed
+        checkGoogle()
     } 
 
     // Dom
@@ -180,27 +220,4 @@
     document.addEventListener("DOMContentLoaded", ()=>off.addEventListener("click", onOffScript));
     off.addEventListener('click',onOffHandler)
 
-// 
-
-
-
-// TESTING
-    const logo = selectElement("#logo")
-    logo.addEventListener("click",()=>{
-        chrome.storage.local.clear();
-    })
-    logo.addEventListener("contextmenu",()=>{
-        chrome.storage.local.get(
-            'selectedLanguage', 
-            (result) => {
-                console.log(result)
-            }
-        );
-        chrome.storage.local.get(
-            'state', 
-            (result) => {
-                console.log(result)
-            }
-        );
-    })
 // 
