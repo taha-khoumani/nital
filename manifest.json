@@ -13,8 +13,24 @@
     "content_scripts":[
         {
             "matches":["<all_urls>"],
-            "css": ["content_scripts/allUrls.css"],
-            "js": ["content_scripts/allUrls.js"],
+            "exclude_matches": [
+                "https://www.google.com/",
+                "https://www.youtube.com/"
+            ],
+            "css": ["content_scripts/allUrls/allUrls.css"],
+            "js": ["content_scripts/allUrls/allUrls.js"],
+            "all_frames": true
+        },
+        {
+            "matches":["https://www.google.com/"],
+            "css": ["content_scripts/google/google.css"],
+            "js": ["content_scripts/google/google.js"],
+            "all_frames": true
+        },
+        {
+            "matches":["https://www.youtube.com/"],
+            "css": ["content_scripts/youtube/youtube.css"],
+            "js": ["content_scripts/youtube/youtube.js"],
             "all_frames": true
         }
     ],

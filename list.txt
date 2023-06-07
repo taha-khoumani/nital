@@ -1,3 +1,6 @@
+-update ui of all tabs, not just current one
+-random erros
+
 -search bar
 -scroll to selected language
 -animate the on/off button

@@ -174,7 +174,7 @@
     function onOnScript() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, {"message": "on"});
+            chrome.tabs.sendMessage(activeTab.id, {message: "on"});
         });
     }
     function onOnHandler(){
@@ -195,7 +195,7 @@
     function onOffScript() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, {"message": "off"});
+            chrome.tabs.sendMessage(activeTab.id, {message: "off"});
         });
     }
     function onOffHandler(){
