@@ -29,7 +29,7 @@
     function(request, sender, sendResponse) {
       if( request.message === "on" ) {
         on();
-      }else{
+      }else if(request.message === "off"){
         off()
       }
     }
@@ -40,9 +40,13 @@
   
 // On load
   chrome.storage.local.get(
-      'state',
-      (result) => {
-          if(result.state === "on")on();
-      }
+    'state',
+    (result) => {
+        if(result.state === "on")on();
+    }
   );
 // 
+
+window.addEventListener('focus', function() {
+  console.log("UPDATING...")
+});

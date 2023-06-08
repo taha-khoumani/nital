@@ -1,46 +1,46 @@
 // Helpers
-function checkGoogle(){
-    chrome.storage.local.get(
-        'state',
-        (result) => {
+    function checkGoogle(){
+        chrome.storage.local.get(
+            'state',
+            (result) => {
 
-            
-            // Vars
-            const state = result.state
+                
+                // Vars
+                const state = result.state
 
-            if(!state)return;
+                if(!state)return;
 
-            if(state === "on"){
-                goToGoolgeIfOnHome()
-            }else{
-                goToHomeIfOnGoogle()
+                if(state === "on"){
+                    goToGoolgeIfOnHome()
+                }else{
+                    goToHomeIfOnGoogle()
+                }
+            } 
+        );
+    }
+
+    function goToGoolgeIfOnHome(){
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            const tab = tabs[0];
+            if (!tab.url || tab.url === "chrome://newtab/") {
+            chrome.tabs.update({ url: "https://www.google.com" });
             }
-        } 
-    );
-}
+        }); 
+    }
 
-function goToGoolgeIfOnHome(){
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        const tab = tabs[0];
-        if (!tab.url || tab.url === "chrome://newtab/") {
-          chrome.tabs.update({ url: "https://www.google.com" });
-        }
-    }); 
-}
-
-function goToHomeIfOnGoogle(){
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-        const tab = tabs[0];
-        if (tab.url === "https://www.google.com/") {
-          chrome.tabs.update({ url: "chrome://newtab/" });
-        }
-    }); 
-}
+    function goToHomeIfOnGoogle(){
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            const tab = tabs[0];
+            if (tab.url === "https://www.google.com/") {
+            chrome.tabs.update({ url: "chrome://newtab/" });
+            }
+        }); 
+    }
 // 
 
 
 
-// GOOGLE-URL-TOGGLING-ON-NEW-TAB
+// ON-NEW-TAB
     chrome.tabs.onCreated.addListener(function(tab) {
         if (!tab.url || tab.url === "chrome://newtab/") {
             checkGoogle()
@@ -49,3 +49,29 @@ function goToHomeIfOnGoogle(){
 
 // 
   
+// ON-CHANGE-TAB
+    chrome.tabs.onActivated.addListener(function(activeInfo) {
+        // Update url if on home
+        checkGoogle()
+
+        // Check state value
+        chrome.storage.local.get(
+            'state',
+            (result) => {
+                // if it's the user first visit 
+                if(!result.state)return;
+    
+    
+                // Variables
+                state = result.state
+    
+                // Update UI orange outline based on state
+                chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
+                    var activeTab = tabs[0];
+                    chrome.tabs.sendMessage(activeTab.id, {message: state});
+                });
+                
+            }
+        );
+    });
+// 

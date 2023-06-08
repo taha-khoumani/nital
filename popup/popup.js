@@ -35,7 +35,7 @@
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             const tab = tabs[0];
             if (!tab.url || tab.url === "chrome://newtab/") {
-              chrome.tabs.update({ url: "https://www.google.com" });
+              chrome.tabs.update({ url: "https://www.google.com" },()=>console.log("google finished"));
             }
         }); 
     }
@@ -76,18 +76,18 @@
         removeAddClass(home,"hidden","flex")
         removeAddClass(languagesSection,"flex","hidden")
     }
-    function onSaveHandler(){
+    function onSavePopup(){
         if(!form.checkValidity()) return;
 
         state = "on"
         chrome.storage.local.set({state:"on"})
-        onOnScript()
+        onOnUI()
         goToHome()
     }
 
     // Dom
     currentLanguageShownContainer.addEventListener('click',goToLanguagesSection)
-    saveButton.addEventListener('click',onSaveHandler)
+    saveButton.addEventListener('click',onSavePopup)
 //
 
 
@@ -125,7 +125,7 @@
     );
 
     // On change
-    function onLanguageChangeHandler(e){
+    function onLanguageChangePopup(e){
         // Variables
         const clickedRadio = e.target
         const clickedLanguage = e.target.value
@@ -140,7 +140,7 @@
     }
 
     // Dom
-    languagesInputs.forEach(language=>language.addEventListener('change',onLanguageChangeHandler))
+    languagesInputs.forEach(language=>language.addEventListener('change',onLanguageChangePopup))
 // 
 
 
@@ -164,20 +164,26 @@
             state = result.state
 
             if(state === 'on') return;
-            onOffHandler()
+            onOffPopup()
             
             
         }
     );
 
-    //Event listener funtions      
-    function onOnScript() {
+    //Event listener funtions  
+    function ON(){
+
+    }    
+    function OFF (){
+
+    }
+    function onOnUI() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
             chrome.tabs.sendMessage(activeTab.id, {message: "on"});
         });
     }
-    function onOnHandler(){
+    function onOnPopup(){
         // Update global variable
         state = "on"
 
@@ -192,13 +198,13 @@
         // Navigate to Google.com if needed
         checkGoogle()
     } 
-    function onOffScript() {
+    function onOffUI() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
             chrome.tabs.sendMessage(activeTab.id, {message: "off"});
         });
     }
-    function onOffHandler(){
+    function onOffPopup(){
         // Update global variable
         state = "off"
 
@@ -215,9 +221,9 @@
     } 
 
     // Dom
-    document.addEventListener("DOMContentLoaded", ()=>on.addEventListener("click", onOnScript));
-    on.addEventListener('click',onOnHandler)
-    document.addEventListener("DOMContentLoaded", ()=>off.addEventListener("click", onOffScript));
-    off.addEventListener('click',onOffHandler)
+    document.addEventListener("load", ()=>on.addEventListener("click", onOnUI));
+    on.addEventListener('click',onOnPopup)
+    document.addEventListener("load", ()=>off.addEventListener("click", onOffUI));
+    off.addEventListener('click',onOffPopup)
 
 // 

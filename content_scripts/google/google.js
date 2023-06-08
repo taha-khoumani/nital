@@ -25,7 +25,7 @@ function applyOrangeOutline() {
     function(request, sender, sendResponse) {
       if( request.message === "on" ) {
         on();
-      }else{
+      }else if(request.message === "off"){
         off()
       }
     }

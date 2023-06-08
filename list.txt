@@ -1,4 +1,3 @@
--update ui of all tabs, not just current one
 -random erros
 
 -search bar
