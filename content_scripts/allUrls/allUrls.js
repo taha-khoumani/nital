@@ -46,7 +46,3 @@
     }
   );
 // 
-
-window.addEventListener('focus', function() {
-  console.log("UPDATING...")
-});

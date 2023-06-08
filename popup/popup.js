@@ -71,6 +71,9 @@
         removeAddClass(languagesSection,"hidden","flex")
         removeAddClass(home,"flex","hidden")
         saveButton.innerText = "Go back"
+
+        // scroll to selected language
+        selectElement(`#${selectedLanguage}`).scrollIntoView()
     }
     function goToHome(){
         removeAddClass(home,"hidden","flex")
@@ -83,6 +86,7 @@
         chrome.storage.local.set({state:"on"})
         onOnUI()
         goToHome()
+        checkGoogle()
     }
 
     // Dom
@@ -101,7 +105,7 @@
         'selectedLanguage',
         (result) => {
             // Variables
-            const selectedLanguage = result.selectedLanguage
+            selectedLanguage = result.selectedLanguage
 
             // if it's the user first visit
             if(!selectedLanguage){
@@ -136,6 +140,15 @@
         
         // update the currentLanguageShown in home
         currentLanguageShown.innerText = clickedRadio.labels[0].textContent
+
+        // Add the removed languages if search box used
+        languagesDiv.forEach(language=>language.style.display = "")
+
+        // Reseting the search input
+        search.value = ""
+
+        // Scroll to selected element
+        selectElement(`#${clickedLanguage}`).scrollIntoView()
         
     }
 
@@ -181,6 +194,7 @@
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
             chrome.tabs.sendMessage(activeTab.id, {message: "on"});
+
         });
     }
     function onOnPopup(){
@@ -225,5 +239,36 @@
     on.addEventListener('click',onOnPopup)
     document.addEventListener("load", ()=>off.addEventListener("click", onOffUI));
     off.addEventListener('click',onOffPopup)
+
+// 
+
+
+
+// Search Filtering
+    // Vars
+    const search = selectElement("#search")
+    const languagesDiv = Array.from(document.querySelectorAll(".language"))
+    
+
+    // Event listener functions
+    function onInputSearchHandler(e){
+        const searchInput = e.target.value
+        const regex = new RegExp(`^${searchInput}.*`,'i');
+        const languagesInputs = languagesDiv.map(l=>l.firstElementChild.id)
+        const languagesInputsToRemove = languagesInputs.filter(l=>!regex.test(l))
+        const languagesDivToRemove = languagesInputsToRemove.map(l=>selectElement(`#${l}`).parentNode)
+        
+        languagesDiv.forEach(languageDiv=>{
+            if(languagesDivToRemove.includes(languageDiv)){
+                languageDiv.style.display = 'none'
+            }else{
+                languageDiv.style.display = ''
+            }
+        })
+
+    }
+
+    // Dom
+    search.addEventListener("input",onInputSearchHandler)
 
 // 

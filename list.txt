@@ -1,8 +1,11 @@
--random erros
+IMPORTANT:
+    -random erros pt2
+        -on go back
+        -on active tab
+        -on new tab
 
--search bar
--scroll to selected language
--animate the on/off button
+NOT IMPORTANT:
+    -animate the on/off button
 
 
 
