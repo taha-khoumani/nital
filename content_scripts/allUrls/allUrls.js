@@ -46,3 +46,32 @@
     }
   );
 // 
+
+
+
+// MAIN-TRANSLATERATION-LOGIC
+  const inputElements = Array.from(document.querySelectorAll("input,textarea"))
+  inputElements.forEach(input=>{
+      input.addEventListener('input',translaterate)
+  })
+
+  function translaterate(e){
+
+    chrome.storage.local.get(
+      'state',
+      (result) => {
+        // if it's the user first visit 
+        if(!result.state || result.state === 'off')return;
+
+        const input = e.target
+        const value = input.value
+        const regex = new RegExp('.*')
+        const translateratedValue = value.replace(regex,'X'.repeat(value.length))
+      
+        input.value = translateratedValue
+
+      }
+  );
+  
+  }
+// 

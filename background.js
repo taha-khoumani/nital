@@ -36,6 +36,16 @@
             }
         }); 
     }
+
+    function handleError() {
+        if(chrome.runtime.lastError) {
+          // Something went wrong
+          console.warn("Whoops.. " + chrome.runtime.lastError.message);
+          // Maybe explain that to the user too?
+        } else {
+          // No errors, you can use entry
+        }
+    }
 // 
 
 
@@ -68,15 +78,17 @@
                 // Update UI orange outline based on state
                 chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
                     var activeTab = tabs[0];
-                    chrome.tabs.sendMessage(activeTab.id, {message: state})
+                    chrome.tabs.sendMessage(activeTab.id, {message: state},handleError)
                 });
                 
             }
         );
     }
 
+
     chrome.tabs.onActivated.addListener(function(activeInfo) {
         runExtensionOnTabChange()
     });
-      
+          
+
 // 

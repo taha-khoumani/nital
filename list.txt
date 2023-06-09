@@ -1,13 +1,15 @@
 IMPORTANT:
-    -random erros pt2
-        -on go back
-        -on active tab
-        -on new tab
+   if any error hapen , look for the handlerError function that sort of ignore the : "Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist." error.
 
 NOT IMPORTANT:
     -animate the on/off button
 
 
+
+"exclude_matches": [
+    "https://www.google.com/",
+    "https://www.youtube.com/"
+],
 
 
 

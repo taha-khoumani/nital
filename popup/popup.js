@@ -48,6 +48,15 @@
             }
         }); 
     }
+
+    function handleError() {
+        if(chrome.runtime.lastError) {
+
+        } else {
+
+        }
+    }
+
 // 
 
 
@@ -193,7 +202,7 @@
     function onOnUI() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, {message: "on"});
+            chrome.tabs.sendMessage(activeTab.id, {message: "on"},handleError);
 
         });
     }
@@ -215,7 +224,7 @@
     function onOffUI() {
         chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
             var activeTab = tabs[0];
-            chrome.tabs.sendMessage(activeTab.id, {message: "off"});
+            chrome.tabs.sendMessage(activeTab.id, {message: "off"},handleError);
         });
     }
     function onOffPopup(){
@@ -235,9 +244,9 @@
     } 
 
     // Dom
-    document.addEventListener("load", ()=>on.addEventListener("click", onOnUI));
+    document.addEventListener("DOMContentLoaded", ()=>on.addEventListener("click", onOnUI));
     on.addEventListener('click',onOnPopup)
-    document.addEventListener("load", ()=>off.addEventListener("click", onOffUI));
+    document.addEventListener("DOMContentLoaded", ()=>off.addEventListener("click", onOffUI));
     off.addEventListener('click',onOffPopup)
 
 // 
