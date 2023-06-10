@@ -281,3 +281,83 @@
     search.addEventListener("input",onInputSearchHandler)
 
 // 
+
+
+
+// GET-ACCES-TOKEN
+    import { GoogleAuth } from './google-auth-library';
+
+    async function getAccessToken() {
+    // Define the service account credentials
+    const credentials = {
+        "type": "service_account",
+        "project_id": "nital-389303",
+        "private_key_id": "746472d43c6bb17437e59d31f08350690cb8a365",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n",
+        "client_email": "your-client-email@your-project-id.iam.gserviceaccount.com",
+        "client_id": "your-client-id",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-client-email%40your-project-id.iam.gserviceaccount.com"
+    };
+
+    // Create a new auth client
+    const auth = new GoogleAuth({
+        credentials,
+        scopes: 'https://www.googleapis.com/auth/cloud-platform',
+    });
+
+    // Obtain the access token
+    const accessToken = await auth.getAccessToken();
+    return accessToken;
+    }
+
+    // Usage example
+    getAccessToken()
+    .then(accessToken => {
+        console.log('Access Token:', accessToken);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+// 
+
+
+
+// TEST
+    const logo = selectElement("#logo")
+    async function onLogoClick (){
+        // const text = 'sama3a'
+        // const inputLanguage = 'en'
+        // const outputLanguage = 'ar'
+        // const accessToken = generateAccessToken()
+        
+        // const response = await fetch('https://translate.googleapis.com/v3beta1/projects/nital-389303:translateText',{
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${accessToken}`,
+        //     },
+        //     body: JSON.stringify({                
+        //         "contents": [text],
+        //         "sourceLanguageCode":inputLanguage,
+        //         "targetLanguageCode": outputLanguage,
+        //         "mimType":"text/plain"
+        //     })
+        // })
+        // const data = await response.json()
+
+        // console.log('data :',data)
+        // console.log('result :',result)
+
+        // let latin = ''
+
+        // alert(arabic)
+
+
+        console.log(awaitgenerateAccessToken())
+    }
+    logo.addEventListener('click',onLogoClick)
+// 

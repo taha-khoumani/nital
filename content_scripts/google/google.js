@@ -46,8 +46,8 @@ function applyOrangeOutline() {
 
 
 // MAIN-TRANSLATERATION-LOGIC
-  const inputElements = Array.from(document.querySelectorAll("input,textarea"))
-  inputElements.forEach(input=>{
+  const googleInputElements = Array.from(document.querySelectorAll("input,textarea"))
+  googleInputElements.forEach(input=>{
       input.addEventListener('input',translaterate)
   })
 

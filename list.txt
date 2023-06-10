@@ -1,8 +1,9 @@
 IMPORTANT:
-   if any error hapen , look for the handlerError function that sort of ignore the : "Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist." error.
+   -add the google.com/search 
 
 NOT IMPORTANT:
     -animate the on/off button
+    - add hover effects for languages
 
 
 
@@ -33,3 +34,6 @@ NOT IMPORTANT:
 
 <!-- seperator -->
 <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
+
+
+ryNqvb
