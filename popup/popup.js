@@ -285,42 +285,19 @@
 
 
 // GET-ACCES-TOKEN
-    import { GoogleAuth } from './google-auth-library';
+    // required header information.
+    var pHeader = {"alg":"RS256","typ":"JWT"}
+    var sHeader = JSON.stringify(pHeader);
 
-    async function getAccessToken() {
-    // Define the service account credentials
-    const credentials = {
-        "type": "service_account",
-        "project_id": "nital-389303",
-        "private_key_id": "746472d43c6bb17437e59d31f08350690cb8a365",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n",
-        "client_email": "your-client-email@your-project-id.iam.gserviceaccount.com",
-        "client_id": "your-client-id",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-client-email%40your-project-id.iam.gserviceaccount.com"
-    };
+    // claim
+    var pClaim = {};
+    pClaim.aud = "https://www.googleapis.com/oauth2/v3/token";
+    pClaim.scope = "https://www.googleapis.com/auth/analytics.readonly";
+    pClaim.iss = "<serviceAccountEmail@developer.gserviceaccount.com";
+    pClaim.exp = KJUR.jws.IntDate.get("now + 1hour");
+    pClaim.iat = KJUR.jws.IntDate.get("now");
+    var sClaim = JSON.stringify(pClaim);
 
-    // Create a new auth client
-    const auth = new GoogleAuth({
-        credentials,
-        scopes: 'https://www.googleapis.com/auth/cloud-platform',
-    });
-
-    // Obtain the access token
-    const accessToken = await auth.getAccessToken();
-    return accessToken;
-    }
-
-    // Usage example
-    getAccessToken()
-    .then(accessToken => {
-        console.log('Access Token:', accessToken);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
 
 // 
 
