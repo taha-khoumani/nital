@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+
+    <link href="./style/tailwind.css" rel="stylesheet">
+    <script src="popup.js" type="module" defer></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="px-8 pb-6 w-359px flex flex-col items-center gap-8">
+
+        <!-- header -->
+        <div class="w-full flex flex-col items-center pt-4 gap-4">
+
+            <!-- logo -->
+            <div id="logo" class="w-100px h-37px bg-contain bg-no-repeat bg-center" style="background-image: url(../assets/logo.png);"></div>
+
+            <!-- seperator -->
+            <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
+
+        </div>
+
+        <!-- main -->
+        <div class="relative w-full">
+
+            <!-- home -->
+            <div id="home" class="w-full hidden flex-col gap-8">
+    
+                <!-- ON/OFF toggler -->
+                <div class="border-3px border-gray rounded-full w-full p-3px flex text-gray">
+                    <div id="on" class="toggler state">
+                        <p>ON</p>
+                    </div>
+                    <div id="off" class="toggler">
+                        <p>OFF</p>
+                    </div>
+                </div>
+    
+                <!-- dropdown -->
+                <div 
+                    id="currentLanguageShownContainer" 
+                    class="flex items-center border-2 border-gray rounded-lg w-full h-10 px-6 cursor-pointer hover:bg-gray hover:text-white transition"
+                >
+                    <p id="currentLanguageShown" class="text-gray text-sm my-auto"></p>
+                </div>
+    
+
+            </div>
+    
+            <!-- language-customization-section -->
+            <div id="language-selection" class="flex flex-col gap-8">
+    
+                <!-- language select -->
+                <div class="flex flex-col gap-6">
+    
+                    <!-- counter -->
+                    <p class="text-sm text-black">Select the language your interested in :</p>
+    
+                    <!-- search bar -->
+                    <div class="border-2 rounded-full border-gray flex overflow-hidden">
+                        <div class="py-3 pl-5 pr-4 border-r-2 border-gray">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="#393E46" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                        </div>
+                        <input id="search" class="w-full min-h-full outline-none px-6 text-sm placeholder-gray text-gray" placeholder="Search" type="search">
+                    </div>
+    
+                    <!-- languages -->
+                    <form id="languagesForm" class="flex flex-col gap-10px px-2 flex-grow max-h-64 overflow-scroll overflow-x-hidden">
+                        <div class="language">
+                            <input class="language-box" type="radio" required name="language" value="arabic" id="arabic">
+                            <label class="language-label" for="arabic">Arabic / العربية</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="bengali" id="bengali">
+                            <label class="language-label" for="bengali">Bengali / বাংলা</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="burmese" id="burmese">
+                            <label class="language-label" for="burmese">Burmese / ဗမာ</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="chinese_simplified" id="chinese_simplified">
+                            <label class="language-label" for="chinese_simplified">Chinese (Simplified) / 中文 (简体)</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="chinese_traditional" id="chinese_traditional">
+                            <label class="language-label" for="chinese_traditional">Chinese (Traditional) / 中文 (繁體)</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="gujarati" id="gujarati">
+                            <label class="language-label" for="gujarati">Gujarati / ગુજરાતી</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="hindi" id="hindi">
+                            <label class="language-label" for="hindi">Hindi / हिन्दी</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="japanese" id="japanese">
+                            <label class="language-label" for="japanese">Japanese / 日本語</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="kannada" id="kannada">
+                            <label class="language-label" for="kannada">Kannada / ಕನ್ನಡ</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="khmer" id="khmer">
+                            <label class="language-label" for="khmer">Khmer / ភាសាខ្មែរ</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="korean" id="korean">
+                            <label class="language-label" for="korean">Korean / 한국어</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="malayalam" id="malayalam">
+                            <label class="language-label" for="malayalam">Malayalam / മലയാളം</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="marathi" id="marathi">
+                            <label class="language-label" for="marathi">Marathi / मराठी</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="nepali" id="nepali">
+                            <label class="language-label" for="nepali">Nepali / नेपाली</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="odia" id="odia">
+                            <label class="language-label" for="odia">Odia / ଓଡ଼ିଆ</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="pashto" id="pashto">
+                            <label class="language-label" for="pashto">Pashto / پښتو</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="persian" id="persian">
+                            <label class="language-label" for="persian">Persian / فارسی</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="punjabi" id="punjabi">
+                            <label class="language-label" for="punjabi">Punjabi / ਪੰਜਾਬੀ</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="russian" id="russian">
+                            <label class="language-label" for="russian">Russian / русский</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="sanskrit" id="sanskrit">
+                            <label class="language-label" for="sanskrit">Sanskrit / संस्कृतम्</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="sindhi" id="sindhi">
+                            <label class="language-label" for="sindhi">Sindhi / سنڌي</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="sinhala" id="sinhala">
+                            <label class="language-label" for="sinhala">Sinhala / සිංහල</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="tamil" id="tamil">
+                            <label class="language-label" for="tamil">Tamil / தமிழ்</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="telugu" id="telugu">
+                            <label class="language-label" for="telugu">Telugu / తెలుగు</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="thai" id="thai">
+                            <label class="language-label" for="thai">Thai / ไทย</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="urdu" id="urdu">
+                            <label class="language-label" for="urdu">Urdu / اردو</label>
+                        </div>
+                        
+                        <div class="language">
+                            <input class="language-box" type="radio" name="language" value="uzbek" id="uzbek">
+                            <label class="language-label" for="uzbek">Uzbek / Oʻzbek</label>
+                        </div>
+                        
+                    </form>
+    
+                </div>
+    
+                <!-- save -->
+                <button 
+                    id="save-languages" 
+                    class="text-sm bg-orange text-white w-full py-3 rounded-full border-2 border-orange hover:text-orange hover:bg-white transition"
+                    type="submit"
+                    form="languagesForm"
+                >
+                    Go back
+                </button>
+    
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

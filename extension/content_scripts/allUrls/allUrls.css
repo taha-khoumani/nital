@@ -1,0 +1,11 @@
+.orange-outline{
+    outline: 1px solid #FE552D !important;
+    border: 1px solid #FE552D !important;
+    border-radius: 8px !important;
+}
+
+.orange-outline:focus{
+    outline: 2px solid #FE552D !important;
+    border: 1px solid #FE552D !important;
+    border-radius: 8px !important;
+}

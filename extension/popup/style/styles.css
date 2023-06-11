@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+.language {
+  @apply flex items-center gap-10px;
+}
+.language .language-box {
+  @apply outline-2 outline-gray border-solid accent-orange cursor-pointer;
+}
+.language .language-label {
+  @apply text-gray text-sm cursor-pointer;
+}
+
+.toggler {
+  @apply w-full text-center p-6px rounded-full cursor-pointer;
+}
+.toggler p {
+  @apply text-lg;
+}
+
+#currentLanguageShownContainer:hover p {
+  @apply text-white;
+}
+
+#dropdown:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.state {
+  @apply bg-orange text-white;
+}
+
+.disabled {
+  @apply opacity-25 cursor-not-allowed;
+}
+.disabled {
+  background-color: white !important;
+}
+.disabled p {
+  color: gray !important;
+}
