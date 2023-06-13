@@ -37,3 +37,10 @@ NOT IMPORTANT:
 
 
 ryNqvb
+
+TRANSLATION-STYLES
+    - after space
+    - live but translatedText is only dropdown
+    - after shortcut
+
+    -combination of dropdown and after space

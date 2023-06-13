@@ -113,7 +113,7 @@
             chrome.tabs.sendMessage(CurrTab.id,{
                 translateration:true, 
                 result
-            });
+            },handleError);
         })
 
 

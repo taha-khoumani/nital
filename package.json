@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@google-cloud/translate": "^7.2.1",
-    "google-auth-library": "^8.8.0"
+    "google-auth-library": "^8.8.0",
+    "iso-639-1": "^2.1.15"
   }
 }
