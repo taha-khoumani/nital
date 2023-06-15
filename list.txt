@@ -1,9 +1,18 @@
-IMPORTANT:
-   -add the google.com/search 
+CRUTIAL:
+    1 - Make nital translaterate the word that the cursor is on instead of the last word
+    2 - Add Drop down
+    3 - Fix API to: temparature 0 , plus change prompt to "give me 2 possible translaterations for the word x in x"
 
-NOT IMPORTANT:
-    -animate the on/off button
-    - add hover effects for languages
+SECONDARY:
+    1 - Show to the user what is he typing using a sort of drop down
+    2 - Change the input direction right when the user load the page or select a new language instad of onInput
+    3 - Add the google.com/search perfect orange outlines
+    4 - Automatically select the language and go Home onClick
+    5 - Add hover effects for languages
+    6 - Animate the on/off button
+
+FINAL-STEPS:
+    1 - Replace the tahak.vercel.app in buymeacoffe with the actual webExtension link
 
 
 

@@ -97,27 +97,21 @@
 
 
 // TRANSLATERATION-WORK
-    chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if(message.translateration !== true) return;
 
         const {text,language} = message
-        const url = `https://us-central1-nital-389303.cloudfunctions.net/translateText?text=${text}&to=${language}&`
+        const url = `https://us-central1-nital-389303.cloudfunctions.net/transliterateText?text=${text}&to=${language}&`
 
-        const response = await fetch(url)
-        const data = await response.json()
-
-        const result = data.translatedText
-
-        chrome.tabs.query({active : true, lastFocusedWindow : true}, function (tabs) {
-            var CurrTab = tabs[0];
-            chrome.tabs.sendMessage(CurrTab.id,{
-                translateration:true, 
-                result
-            },handleError);
+        fetch(url)
+        .then(res=>res.json())
+        .then(data=>{
+            const result = data.choices.map(choice=>choice.message.content)[0]
+            sendResponse(result)
         })
 
 
-        // return true
+        return true;
     });
   
 // 

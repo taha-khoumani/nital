@@ -54,100 +54,114 @@ function applyOrangeOutline() {
 
 
 // MAIN-TRANSLATERATION-LOGIC
-const languageMap = {
-  arabic: 'ar',
-  bengali: 'bn',
-  burmese: 'my',
-  chinese_simplified: 'zh-CN',
-  chinese_traditional: 'zh-TW',
-  gujarati: 'gu',
-  hindi: 'hi',
-  japanese: 'ja',
-  kannada: 'kn',
-  khmer: 'km',
-  korean: 'ko',
-  malayalam: 'ml',
-  marathi: 'mr',
-  nepali: 'ne',
-  odia: 'or',
-  pashto: 'ps',
-  persian: 'fa',
-  punjabi: 'pa',
-  russian: 'ru',
-  sanskrit: 'sa',
-  sindhi: 'sd',
-  sinhala: 'si',
-  tamil: 'ta',
-  telugu: 'te',
-  thai: 'th',
-  urdu: 'ur',
-  uzbek: 'uz',
-};
 
-let input = null;
+let globalInput = null;
+
+function getCurrentWord(input) {
+  const value = input.value
+  const cursorPosition = input.selectionStart
+
+  // Find the start and end positions of the word
+  let start = cursorPosition;
+  let end = cursorPosition;
+  
+  // Move the start position backwards until a space or the beginning of the input field is encountered
+  while (start > 0 && value.charAt(start - 1) !== ' ') {
+    start--;
+  }
+  
+  // Move the end position forwards until a space or the end of the input field is encountered
+  while (end < value.length && value.charAt(end) !== ' ') {
+    end++;
+  }
+  
+  // Extract the word based on the start and end positions
+  const word = value.substring(start, end);
+  
+  return word
+}
+function getSpacedWord(inputElement) {
+  const cursorPosition = inputElement.selectionStart;
+  const inputValue = inputElement.value
+  
+  let word = '';
+  let i = cursorPosition - 1;
+  
+  // Move backwards until a non-space character is encountered or the beginning of the input
+  do{
+    word = inputValue[i] + word;
+    i--;
+  }
+  while (i >= 0 && inputValue[i] !== ' ')
 
 
-// send message to background.js
-async function translaterate(e){
-  // change typing direction
-  chrome.storage.local.get('selectedLanguage',(result)=>{
-    const language = result.selectedLanguage
-    if(language === ('arabic' || 'pashto' || 'persian' || 'urdu')){
-      e.target.dir = 'rtl'
-    } else {
-      e.target.dir = 'ltr'
+
+  // Check if the word has a space at the end
+  if (word[word.length - 1] === ' ') {
+    word = word.trim(); // Remove trailing space
+  }
+
+  return word;
+}
+
+// Send message to background.js
+function translaterate(e){
+
+  chrome.storage.local.get(['selectedLanguage','state'],async(result)=>{
+
+    // if(e.key === '')
+    const keyPressed = e.key
+    if(keyPressed === " "){
+      console.log(`transform ${getSpacedWord(e.target)}`)
+    }else{
+      console.log(`dropdown ${getCurrentWord(e.target)}`)
     }
+
+    // Vars.
+    const {selectedLanguage,state} = result
+    const localInput = e.target
+    globalInput = localInput
+    const text = localInput.value          
+    const currentWord = getCurrentWord(localInput)
+
+    // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
+    if(!state || state === 'off' || !currentWord)return;
+
+    // Change typing direction based on language.
+    selectedLanguage === ('arabic' || 'pashto' || 'persian' || 'urdu') ? localInput.dir = 'rtl' : localInput.dir = 'ltr'
+
+    // Send text to transliterate to background.js.
+    const messageBody = { 
+      translateration:true, 
+      language:selectedLanguage,
+      text:currentWord,
+    }
+
+    chrome.runtime.sendMessage(messageBody,(response)=>{
+      
+    });
+
 
   })
 
-  chrome.storage.local.get(
-    'state',
-    (result) => {
-      // if it's the user first visit 
-      if(!result.state || result.state === 'off')return;
-      
-      input = e.target
-      const text = input.value          
-      const lastWordArray = text.match(/\b(\w+)\b(?= )/g)
-
-      if(!lastWordArray?.length)return;
-
-      chrome.storage.local.get('selectedLanguage',(result)=>{
-        
-        const lastWord = lastWordArray[0]
-        const language = result.selectedLanguage
-        const languageCode = languageMap[language]
-
-        // send message to background.js
-        chrome.runtime.sendMessage({ 
-          translateration:true, 
-          language:languageCode,
-          text:lastWord,
-        },handleError);
-
-
-      })
-      
-    }
-  )
 }
 
-
+/*
 // listen to translateration from background.js
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-  if(message.translateration !== true) return;
-  const {result} = message;
-  let value = input.value.replace(/\b(\w+)\b(?= )/g,result)
+  // if(message.translateration !== true || ) return;
 
-  input.value = value
+  const {result} = message;
+  let value = globalInput.value.replace(getCurrentWord(globalInput),result)
+
+  globalInput.value = value
 
 });
-
+*/
 
 // Event listiners
 const inputElements = Array.from(document.querySelectorAll("input,textarea"))
 inputElements.forEach(input=>{
-  input.addEventListener('input',translaterate)
+  input.addEventListener('keyup',translaterate)
 })
-
 // 
