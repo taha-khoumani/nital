@@ -109,37 +109,55 @@ function translaterate(e){
 
   chrome.storage.local.get(['selectedLanguage','state'],async(result)=>{
 
-    // if(e.key === '')
-    const keyPressed = e.key
-    if(keyPressed === " "){
-      console.log(`transform ${getSpacedWord(e.target)}`)
-    }else{
-      console.log(`dropdown ${getCurrentWord(e.target)}`)
-    }
-
     // Vars.
     const {selectedLanguage,state} = result
     const localInput = e.target
-    globalInput = localInput
-    const text = localInput.value          
-    const currentWord = getCurrentWord(localInput)
+    globalInput = localInput  
+    let messageBody;
 
     // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
-    if(!state || state === 'off' || !currentWord)return;
+    if(!state || state === 'off')return;
 
     // Change typing direction based on language.
     selectedLanguage === ('arabic' || 'pashto' || 'persian' || 'urdu') ? localInput.dir = 'rtl' : localInput.dir = 'ltr'
 
-    // Send text to transliterate to background.js.
-    const messageBody = { 
-      translateration:true, 
-      language:selectedLanguage,
-      text:currentWord,
-    }
+    
+    // If the cursor is under a word: show dropdown menu of possible transliterations.
+    if(getCurrentWord(localInput)){
+      const text = getCurrentWord(localInput)
+      messageBody = { 
+        translateration:true, 
+        language:selectedLanguage,
+        text,
+      }
 
-    chrome.runtime.sendMessage(messageBody,(response)=>{
-      
-    });
+      console.log(`Dropdown ${text}`);return;
+  
+      chrome.runtime.sendMessage(messageBody,(response)=>{
+        // dropdown code...
+      });
+
+    }
+    
+    
+    
+    // If user pressed space: Transliterate word behind.
+    if(e.key === ' '){
+      const text = getSpacedWord(localInput)
+      messageBody = { 
+        translateration:true, 
+        language:selectedLanguage,
+        text,
+      }
+
+      console.log(`Transliterate ${text}`);return;
+
+      chrome.runtime.sendMessage(messageBody,(response)=>{
+        // transliterate code...
+      });
+
+    }
+    
 
 
   })
