@@ -2,3 +2,23 @@
     outline: 3px solid #FE552D !important;
     border-radius: 99999px !important;
 }
+
+/* Dropdown styling */
+.nitalDropdownParent,.nitalDropdownParent input,.nitalDropdownParent textarea{
+    width: 100%;
+}
+.dropdown{
+    z-index: 9999;
+    background-color: white;
+    min-width: 75px;
+}
+.dropdownChoice{
+    color: #25282E;
+    margin:0;
+}
+
+
+/* Remove google dropdown for no-confusions */
+.UUbT9{
+    display: none;
+}
