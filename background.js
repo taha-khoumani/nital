@@ -101,8 +101,8 @@
         if(message.translateration !== true) return;
 
         const {text,language} = message
-        const url = `https://us-central1-nital-389303.cloudfunctions.net/transliterateText?text=${text}&to=${language.toUpperCase()}&`
-        // const url = `http://localhost:8080/transliterateText?text=${text}&to=${language}&`
+        const url = `https://us-central1-nital-389303.cloudfunctions.net/transliterateText?text=${text}&to=${language}&`
+        // const url = `https://us-central1-nital-389303.cloudfunctions.net/transliterateText`
 
         fetch(url)
         .then(res=>res.json())
@@ -111,7 +111,7 @@
                 sendResponse(data)
                 return;
             }
-            const result = data.choices.map(choice=>choice.message.content)[0]
+            const result = data.choices[0].text
             sendResponse(result)
         })
 

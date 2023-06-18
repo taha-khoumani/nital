@@ -79,6 +79,7 @@ function applyOrangeOutline() {
     
     // Extract the word based on the start and end positions
     const word = value.substring(start, end);
+    // console.log(word)
     return word
   }
   function getSpacedWord(inputElement) {
@@ -151,7 +152,6 @@ function applyOrangeOutline() {
     const stringOffset = getStringBeforeWord(input.value,getCurrentWord(input))
     const textFont = getFont(input)
     const offset = `${getTextWidth(stringOffset,textFont)}px`
-    console.log(stringOffset)
     if(input.dir === 'ltr'){
       dropdown.style.left = offset
       dropdown.style.right = 'auto'
@@ -196,6 +196,7 @@ function applyOrangeOutline() {
       const {selectedLanguage,state} = result
       const localInput = e.target
       let messageBody;
+      const extractChoices = (string) => string.replace(/(\r\n|\n|\r)/gm, "").split(/\s*\/\s*/)
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
@@ -217,22 +218,21 @@ function applyOrangeOutline() {
             }
 
             // Extract choices from response
-            const choices = response.split(/\s*\/\s*/)
+            let choices = extractChoices(response)
 
             // Update dropdown content
-            console.log('choices received:',choices)
             updateDropDown(localInput,choices)
             
           });
 
-        }else{
-          // if cursor under no word "remove" dropdown
-          selectElement('.dropdown').style.display = 'none'
         }
       // 
         
       // TRANSLITERATE: If user pressed space: Transliterate word behind.
-      if(e.key === ' '){
+       if(e.key === ' '){
+        // Hide the dropdown
+        selectElement('.dropdown').style.display = 'none'
+        
         const text = getSpacedWord(localInput)
         messageBody = { 
           translateration:true, 
@@ -248,7 +248,8 @@ function applyOrangeOutline() {
           }
 
           //optimize by only asking for the first one or storing the already droped-down value
-          const newValue = localInput.value.replace(getSpacedWord(localInput),response.split(/\s*\/\s*/)[0]) 
+          let choice = extractChoices(response)[0]
+          const newValue = localInput.value.replace(getSpacedWord(localInput),choice) 
           localInput.value = newValue
         });
       }
