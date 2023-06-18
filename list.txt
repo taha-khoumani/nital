@@ -1,7 +1,9 @@
 CRUTIAL:
-    1 - Make nital translaterate the word that the cursor is on instead of the last word
-    2 - Add Drop down
-    3 - Fix API to: temparature 0 , plus change prompt to "give me 2 possible translaterations for the word x in x"
+    1 - Dropdown:
+        a - top / bottom arrows for selecting word, enter to transliterate.
+        b - place the dropdown bellow the current word
+        
+    2 - API: make a better api call or simply add text.toCaptiale()
 
 SECONDARY:
     1 - Show to the user what is he typing using a sort of drop down

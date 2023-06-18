@@ -79,7 +79,6 @@ function applyOrangeOutline() {
     
     // Extract the word based on the start and end positions
     const word = value.substring(start, end);
-    
     return word
   }
   function getSpacedWord(inputElement) {
@@ -123,6 +122,69 @@ function applyOrangeOutline() {
     toWrap.parentNode.insertBefore(wrapper, toWrap);
     return wrapper.appendChild(toWrap);
   };
+  function getStringBeforeWord(inputString, word) {
+    const wordsArray = inputString.split(word);
+    if (wordsArray.length > 1) {
+      return wordsArray[0];
+    } else {
+      return "";
+    }
+  }
+  function getCssStyle(element, prop) {
+    return window.getComputedStyle(element, null).getPropertyValue(prop);
+  }
+  function getFont(input){
+    const weight = getCssStyle(input,'font-weight') 
+    const size = getCssStyle(input,'font-size')
+    const familly = getCssStyle(input,'font-family')
+    return `${weight} ${size} ${familly}`
+  }
+  function getTextWidth(text, font) {
+    // re-use canvas object for better performance
+    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    const context = canvas.getContext("2d");
+    context.font = font;
+    const metrics = context.measureText(text);
+    return metrics.width;
+  }
+  function positionDropdown(input,dropdown){
+    const stringOffset = getStringBeforeWord(input.value,getCurrentWord(input))
+    const textFont = getFont(input)
+    const offset = `${getTextWidth(stringOffset,textFont)}px`
+    console.log(stringOffset)
+    if(input.dir === 'ltr'){
+      dropdown.style.left = offset
+      dropdown.style.right = 'auto'
+    }else{
+      dropdown.style.right = offset
+      dropdown.style.left = 'auto'
+    }
+  }
+  function updateDropDown(input,choices){
+
+    // vars
+    const dropdown = selectElement('.dropdown')
+
+    // reset
+    dropdown.innerHTML = ''
+    
+    // add content and event listiners
+    choices.forEach(choice=>{
+      const pElement = elementClassInner('p','dropdownChoice',choice)
+      pElement.addEventListener('click',()=>{
+        input.value = input.value.replace(getCurrentWord(input),choice) + " "
+        dropdown.style.display = 'none'
+        input.focus()
+      })
+      dropdown.appendChild(pElement)
+    })
+
+    // position dropdown
+    positionDropdown(input,dropdown)
+
+    // display
+    dropdown.style.display = 'block'
+  }
 
 
   // On type
@@ -139,32 +201,36 @@ function applyOrangeOutline() {
       if(!state || state === 'off')return;
       
       // DROPDOWN: If the cursor is under a word: show dropdown menu of possible transliterations.
-      if(getCurrentWord(localInput)){ 
-        const text = getCurrentWord(localInput)
-        messageBody = { 
-          translateration:true, 
-          language:selectedLanguage,
-          text,
-        }
-
-        console.log(`Dropdown ${text}`);
-    
-        chrome.runtime.sendMessage(messageBody,(response)=>{
-          // Extract choices from response
-          const choices = response.split(' / ')
-
-          // Update dropdown content
-          selectElement('.dropdown').innerHTML = ''
-          choices.forEach(choice=>selectElement('.dropdown').appendChild(elementClassInner('p','dropdownChoice',choice)))
-          selectElement('.dropdown').style.display = 'block'
-          
-        });
-
-      }else{
-        // if cursor under no word "remove" dropdown
-        selectElement('.dropdown').style.display = 'none'
-      }
+        if(getCurrentWord(localInput)){ 
+          const text = getCurrentWord(localInput)
+          messageBody = { 
+            translateration:true, 
+            language:selectedLanguage,
+            text,
+          }
       
+          chrome.runtime.sendMessage(messageBody,(response)=>{
+            // check if you have reached rates limits
+            if(response?.message){
+              alert(response.message)
+              return;
+            }
+
+            // Extract choices from response
+            const choices = response.split(/\s*\/\s*/)
+
+            // Update dropdown content
+            console.log('choices received:',choices)
+            updateDropDown(localInput,choices)
+            
+          });
+
+        }else{
+          // if cursor under no word "remove" dropdown
+          selectElement('.dropdown').style.display = 'none'
+        }
+      // 
+        
       // TRANSLITERATE: If user pressed space: Transliterate word behind.
       if(e.key === ' '){
         const text = getSpacedWord(localInput)
@@ -174,11 +240,15 @@ function applyOrangeOutline() {
           text,
         }
   
-        console.log(`Transliterate ${text}`);
-  
         chrome.runtime.sendMessage(messageBody,(response)=>{
+          // check if you have reached rates limits
+          if(response?.message){
+            alert(response.message)
+            return;
+          }
+
           //optimize by only asking for the first one or storing the already droped-down value
-          const newValue = localInput.value.replace(getSpacedWord(localInput),response.split(' / ')[0]) 
+          const newValue = localInput.value.replace(getSpacedWord(localInput),response.split(/\s*\/\s*/)[0]) 
           localInput.value = newValue
         });
       }
@@ -202,10 +272,20 @@ function applyOrangeOutline() {
       // Change typing direction based on language.
       if(selectedLanguage === ('arabic' || 'pashto' || 'persian' || 'urdu')){
         localInput.dir = 'rtl'
-        if(selectElement('.dropdown'))selectElement('.dropdown').style.textAlign = 'right'
+        if(selectElement('.dropdown')){
+          selectElement('.dropdown').style.textAlign = 'right'
+          selectElement('.dropdown').style.left = 'auto'
+          selectElement('.dropdown').style.right = '0'
+          positionDropdown(localInput,selectElement('.dropdown'))
+        }
+
       }else{
         localInput.dir = 'ltr'
-        if(selectElement('.dropdown'))selectElement('.dropdown').style.textAlign = 'left'
+        if(selectElement('.dropdown')){
+          selectElement('.dropdown').style.textAlign = 'left'
+          positionDropdown(localInput,selectElement('.dropdown'))
+        }
+
       } 
   
       // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent

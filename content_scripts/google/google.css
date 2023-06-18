@@ -10,15 +10,25 @@
 .dropdown{
     z-index: 9999;
     background-color: white;
-    min-width: 75px;
+    min-width: 65px;
+    border-radius: 8px;
+    overflow: hidden;
 }
 .dropdownChoice{
     color: #25282E;
     margin:0;
+    cursor: pointer;
+    padding:8px 16px;
+    transition-duration: 100ms;
+    transition-property: background-color;
+    border-bottom: solid 1px #d2d2d2;
+}
+.dropdownChoice:hover{
+    background-color: #d2d2d2;
 }
 
 
 /* Remove google dropdown for no-confusions */
-.UUbT9{
+.UUbT9 .aajZCb{
     display: none;
 }
