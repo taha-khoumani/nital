@@ -169,13 +169,19 @@ function applyOrangeOutline() {
     dropdown.innerHTML = ''
     
     // add content and event listiners
-    choices.forEach(choice=>{
+    choices.forEach((choice,index)=>{
       const pElement = elementClassInner('p','dropdownChoice',choice)
-      pElement.addEventListener('click',()=>{
-        input.value = input.value.replace(getCurrentWord(input),choice) + " "
-        dropdown.style.display = 'none'
-        input.focus()
-      })
+      pElement.tabIndex = index + 1
+      pElement.cursor = 'default' //So that there is no cursor flickering when the p is focused on.
+
+      // Event listiners
+        pElement.addEventListener('click',()=>{
+          input.value = input.value.replace(getCurrentWord(input),choice) + " "
+          dropdown.style.display = 'none'
+          input.focus()
+        })
+        pElement.addEventListener('keyup',(e)=>{if(e.key ==='Enter' || e.key === ' ')e.target.click()})
+      // 
       dropdown.appendChild(pElement)
     })
 
@@ -186,6 +192,11 @@ function applyOrangeOutline() {
     dropdown.style.display = 'block'
   }
 
+  // Vars
+  let lastTransliterationChoice = {
+    original:'',
+    translateration:'',
+  }
 
   // On type
   function translaterate(e){
@@ -200,10 +211,23 @@ function applyOrangeOutline() {
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
+
+      // If there is no text hide dropdown and return
+      if(localInput.value.replace(/\s/g,'') === ''){selectElement('.dropdown').style.display = 'none';return;}
       
-      // DROPDOWN: If the cursor is under a word: show dropdown menu of possible transliterations.
-        if(getCurrentWord(localInput)){ 
-          const text = getCurrentWord(localInput)
+      // UPDATE-DROPDOWN: If the cursor is under a word: show dropdown menu of possible transliterations.
+        const currentWord = getCurrentWord(localInput)
+        if(currentWord){ 
+
+          // NAVIGATE-DROPDOWN
+            if(e.key === 'ArrowDown'){
+              const firstChoice = selectElement('.dropdown').firstChild
+              firstChoice.focus()
+              return;
+            }
+          // 
+
+          const text = currentWord
           messageBody = { 
             translateration:true, 
             language:selectedLanguage,
@@ -219,6 +243,10 @@ function applyOrangeOutline() {
 
             // Extract choices from response
             let choices = extractChoices(response)
+            lastTransliterationChoice = {
+              original:currentWord,
+              translateration:choices[0]
+            }
 
             // Update dropdown content
             updateDropDown(localInput,choices)
@@ -229,30 +257,41 @@ function applyOrangeOutline() {
       // 
         
       // TRANSLITERATE: If user pressed space: Transliterate word behind.
-       if(e.key === ' '){
-        // Hide the dropdown
-        selectElement('.dropdown').style.display = 'none'
-        
-        const text = getSpacedWord(localInput)
-        messageBody = { 
-          translateration:true, 
-          language:selectedLanguage,
-          text,
-        }
-  
-        chrome.runtime.sendMessage(messageBody,(response)=>{
-          // check if you have reached rates limits
-          if(response?.message){
-            alert(response.message)
+        if(e.key === ' '){
+
+          // Hide the dropdown
+          selectElement('.dropdown').style.display = 'none'
+          
+          const text = getSpacedWord(localInput)
+          messageBody = { 
+            translateration:true, 
+            language:selectedLanguage,
+            text,
+          }
+
+          // Optimize the api calls and time if the last dropdown is for the same word => copy past
+          if(lastTransliterationChoice.translateration && text === lastTransliterationChoice.original){
+            const newValue = localInput.value.replace(getSpacedWord(localInput),lastTransliterationChoice.translateration) 
+            localInput.value = newValue
+            console.log('optimazation on TIME and API_CALLS')
             return;
           }
 
-          //optimize by only asking for the first one or storing the already droped-down value
-          let choice = extractChoices(response)[0]
-          const newValue = localInput.value.replace(getSpacedWord(localInput),choice) 
-          localInput.value = newValue
-        });
-      }
+          chrome.runtime.sendMessage(messageBody,(response)=>{
+            // check if you have reached rates limits
+            if(response?.message){
+              alert(response.message)
+              return;
+            }
+
+            //optimize by only asking for the first one or storing the already droped-down value
+            let choice = extractChoices(response)[0]
+            const newValue = localInput.value.replace(getSpacedWord(localInput),choice) 
+            localInput.value = newValue
+          });
+
+        }
+      // 
 
     })
 
@@ -266,6 +305,12 @@ function applyOrangeOutline() {
       // Vars.
       const {selectedLanguage,state} = result
       const localInput = e.target
+
+      // Remove google dropdowns from document
+      if(selectElement('.UUbT9'))selectElement('.UUbT9').remove()
+
+      // Add tabindex 0
+      localInput.tabIndex = 0
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
@@ -311,6 +356,9 @@ function applyOrangeOutline() {
   inputElements.forEach(input=>{
     input.addEventListener('keyup',translaterate)
     input.addEventListener('focus',translaterateSetup)
+    input.addEventListener('load',translaterateSetup)
   })
-
+  document.addEventListener('load',()=>{
+    selectElement('.UUbT9').remove()
+  })
 // 

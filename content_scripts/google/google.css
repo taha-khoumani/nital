@@ -26,6 +26,10 @@
 .dropdownChoice:hover{
     background-color: #d2d2d2;
 }
+.dropdownChoice:focus{
+    background-color: #d2d2d2;
+    outline: none;
+}
 
 
 /* Remove google dropdown for no-confusions */
