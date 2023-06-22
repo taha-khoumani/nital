@@ -14,19 +14,19 @@
         {
             "matches":["<all_urls>"],
             "exclude_matches": [
-                "https://www.google.com/",
-                "https://www.youtube.com/"
+                "https://www.google.com/*",
+                "https://www.youtube.com/*"
             ],
             "css": ["content_scripts/allUrls/allUrls.css"],
             "js": ["content_scripts/allUrls/allUrls.js"]
         },
         {
-            "matches":["https://www.google.com/"],
+            "matches":["https://www.google.com/*"],
             "css": ["content_scripts/google/google.css"],
             "js": ["content_scripts/google/google.js"]
         },
         {
-            "matches":["https://www.youtube.com/"],
+            "matches":["https://www.youtube.com/*"],
             "css": ["content_scripts/youtube/youtube.css"],
             "js": ["content_scripts/youtube/youtube.js"]
         }

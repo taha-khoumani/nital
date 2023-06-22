@@ -230,8 +230,9 @@ function applyOrangeOutline() {
           const text = currentWord
           messageBody = { 
             translateration:true, 
-            language:selectedLanguage,
+            to:selectedLanguage,
             text,
+            one:'false',
           }
       
           chrome.runtime.sendMessage(messageBody,(response)=>{
@@ -242,14 +243,13 @@ function applyOrangeOutline() {
             }
 
             // Extract choices from response
-            let choices = extractChoices(response)
             lastTransliterationChoice = {
               original:currentWord,
-              translateration:choices[0]
+              translateration:response[0]
             }
 
             // Update dropdown content
-            updateDropDown(localInput,choices)
+            updateDropDown(localInput,response)
             
           });
 
@@ -265,8 +265,9 @@ function applyOrangeOutline() {
           const text = getSpacedWord(localInput)
           messageBody = { 
             translateration:true, 
-            language:selectedLanguage,
+            to:selectedLanguage,
             text,
+            one:'true',
           }
 
           // Optimize the api calls and time if the last dropdown is for the same word => copy past
@@ -285,8 +286,7 @@ function applyOrangeOutline() {
             }
 
             //optimize by only asking for the first one or storing the already droped-down value
-            let choice = extractChoices(response)[0]
-            const newValue = localInput.value.replace(getSpacedWord(localInput),choice) 
+            const newValue = localInput.value.replace(getSpacedWord(localInput),response) 
             localInput.value = newValue
           });
 

@@ -9,3 +9,32 @@
     border: 1px solid #FE552D !important;
     border-radius: 8px !important;
 }
+
+
+/* Dropdown styling */
+.nitalDropdownParent,.nitalDropdownParent input,.nitalDropdownParent textarea{
+    width: 100%;
+}
+.dropdown{
+    z-index: 9999;
+    background-color: white;
+    min-width: 65px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.dropdownChoice{
+    color: #25282E;
+    margin:0;
+    cursor: pointer;
+    padding:8px 16px;
+    transition-duration: 100ms;
+    transition-property: background-color;
+    border-bottom: solid 1px #d2d2d2;
+}
+.dropdownChoice:hover{
+    background-color: #d2d2d2;
+}
+.dropdownChoice:focus{
+    background-color: #d2d2d2;
+    outline: none;
+}
