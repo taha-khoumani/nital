@@ -178,11 +178,7 @@ function applyOrangeOutline() {
           dropdown.style.display = 'none'
           input.focus()
         })
-        pElement.addEventListener('keyup',(e)=>{
-          if(e.key ==='Enter' || e.key === ' ')e.target.click()
-          else if (e.key === 'ArrowDown') e.target.nextSibling.focus()
-          else if (e.key === 'ArrowUp') e.target.previousSibling ? e.target.previousSibling.focus() : input.focus()
-        })
+        pElement.addEventListener('keyup',(e)=>{if(e.key ==='Enter' || e.key === ' ')e.target.click()})
       // 
       dropdown.appendChild(pElement)
     })
@@ -209,9 +205,7 @@ function applyOrangeOutline() {
       const {selectedLanguage,state} = result
       const localInput = e.target
       let messageBody;
-
-      // If user press Enter => Submit form (since we removed all event listiners)
-      if(e.key === 'Enter')selectElement('#search-form').submit()
+      const extractChoices = (string) => string.replace(/(\r\n|\n|\r)/gm, "").split(/\s*\/\s*/)
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
@@ -308,28 +302,17 @@ function applyOrangeOutline() {
 
       // Vars.
       const {selectedLanguage,state} = result
+      const localInput = e.target
 
-      // Remove youtube dropdowns from document
-      let old_element = e.target;
-      const localInput = old_element.cloneNode(true);
-      old_element.parentNode.replaceChild(localInput, old_element);
-
-      // if(selectElement('.gstl_50'))selectElement('.gstl_50').remove()
+      // Remove google dropdowns from document
+      // if(selectElement('.gstl_50'))
+      selectElement('.gstl_50').remove()
 
       // Add tabindex 0
       localInput.tabIndex = 0
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
-
-      // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
-      if(!localInput.parentNode.classList.contains('nitalDropdownParent')){
-        wrapInputWithNitalDropdownParentDiv(localInput)
-        const dropdown = elementClassInner('div','dropdown')
-        dropdown.style.position = 'absolute'
-        dropdown.style.display = 'none'
-        selectElement('.nitalDropdownParent').appendChild(dropdown)
-      }
       
       // Change typing direction based on language.
       if(selectedLanguage === ('arabic' || 'pashto' || 'persian' || 'urdu')){
@@ -349,12 +332,18 @@ function applyOrangeOutline() {
         }
 
       } 
+  
+      // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
+      if(!localInput.parentNode.classList.contains('nitalDropdownParent')){
+        wrapInputWithNitalDropdownParentDiv(localInput)
+        const dropdown = elementClassInner('div','dropdown')
+        dropdown.style.position = 'absolute'
+        dropdown.style.display = 'none'
+        selectElement('.nitalDropdownParent').appendChild(dropdown)
+      }
 
       // Switch focus from relative parent to input
       localInput.focus()
-
-      // Add keypup event listener after input changed
-      localInput.addEventListener('keyup',translaterate)
 
     })
 
@@ -364,7 +353,9 @@ function applyOrangeOutline() {
   // Event listiners
   const inputElements = Array.from(document.querySelectorAll("input,textarea"))
   inputElements.forEach(input=>{
+    input.addEventListener('keyup',translaterate)
     input.addEventListener('focus',translaterateSetup)
+    input.addEventListener('load',translaterateSetup)
   })
   document.addEventListener('load',()=>{
     selectElement('.UUbT9').remove()
