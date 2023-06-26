@@ -232,7 +232,7 @@ function applyOrangeOutline() {
             translateration:true, 
             to:selectedLanguage,
             text,
-            one:'false',
+            n:'8'
           }
       
           chrome.runtime.sendMessage(messageBody,(response)=>{
@@ -267,7 +267,7 @@ function applyOrangeOutline() {
             translateration:true, 
             to:selectedLanguage,
             text,
-            one:'true',
+            n:'1'
           }
 
           // Optimize the api calls and time if the last dropdown is for the same word => copy past
@@ -316,7 +316,7 @@ function applyOrangeOutline() {
       if(!state || state === 'off')return;
       
       // Change typing direction based on language.
-      if(selectedLanguage === ('arabic' || 'pashto' || 'persian' || 'urdu')){
+      if(selectedLanguage === ('ar' || 'ps' || 'fa' || 'ur')){
         localInput.dir = 'rtl'
         if(selectElement('.dropdown')){
           selectElement('.dropdown').style.textAlign = 'right'

@@ -100,8 +100,8 @@
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if(message.translateration !== true) return;
 
-        const {text,to,one} = message
-        const url =`https://us-central1-nital-389303.cloudfunctions.net/transliterateTextOpenai?text=${text}&to=${to}&one=${one}`
+        const {text,to,n} = message
+        const url = `https://inputtools.google.com/request?itc=${to}-t-i0&num=${n}&text=${text}`
 
         fetch(url)
         .then(res=>res.json())
@@ -109,8 +109,8 @@
             if(data?.message){
                 sendResponse(data)
                 return;
-            }console.log(data)
-            const result = data.values
+            }
+            const result = data[1][0][1]
             sendResponse(result)
         })
 

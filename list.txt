@@ -1,14 +1,5 @@
-CRUTIAL:
-    1 - Dropdown:
-        a - top / bottom arrows for selecting word, enter to transliterate.
-        b - place the dropdown bellow the current word
-        
-    2 - API: make a better api call or simply add text.toCaptiale()
-
 SECONDARY:
-    1 - Show to the user what is he typing using a sort of drop down
     2 - Change the input direction right when the user load the page or select a new language instad of onInput
-    3 - Add the google.com/search perfect orange outlines
     4 - Automatically select the language and go Home onClick
     5 - Add hover effects for languages
     6 - Animate the on/off button
