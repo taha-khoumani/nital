@@ -178,7 +178,11 @@ function applyOrangeOutline() {
             dropdown.style.display = 'none'
             input.focus()
           })
-          pElement.addEventListener('keyup',(e)=>{if(e.key ==='Enter' || e.key === ' ')e.target.click()})
+          pElement.addEventListener('keyup',(e)=>{
+            if(e.key ==='Enter' || e.key === ' ')e.target.click()
+            // else if (e.key === 'ArrowDown') e.target.nextSibling.focus()
+            // else if (e.key === 'ArrowUp') e.target.previousSibling ? e.target.previousSibling.focus() : input.focus()
+          })
         // 
         dropdown.appendChild(pElement)
       })
@@ -237,7 +241,9 @@ function applyOrangeOutline() {
       const {selectedLanguage,state} = result
       const localInput = e.target
       let messageBody;
-      const extractChoices = (string) => string.replace(/(\r\n|\n|\r)/gm, "").split(/\s*\/\s*/)
+
+      // If user press Enter => Submit form (since we removed all event listiners)
+      if(e.key === 'Enter')selectElement('#search-form').submit()
 
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
@@ -334,16 +340,17 @@ function applyOrangeOutline() {
 
       // Vars.
       const {selectedLanguage,state} = result
-      const localInput = e.target
+
+      // Remove youtube dropdowns from document
+      let old_element = e.target;
+      const localInput = old_element.cloneNode(true);
+      old_element.parentNode.replaceChild(localInput, old_element);
 
       // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
-      wrapUpInputInitilazer(input)
+      wrapUpInputInitilazer(localInput)
 
       // Switch focus from relative parent to input
       localInput.focus()
-
-      // Remove google dropdowns from document
-      if(selectElement('.gstl_50'))selectElement('.gstl_50').remove()
 
       // Add tabindex 0
       localInput.tabIndex = 0
@@ -357,6 +364,9 @@ function applyOrangeOutline() {
       // Change typing direction based on language.
       updateDropdownPosition(selectedLanguage,localInput)
 
+      // Add keypup event listener after input changed
+      localInput.addEventListener('keyup',translaterate)
+
     })
 
   }
@@ -365,9 +375,7 @@ function applyOrangeOutline() {
   // Event listiners
   const inputElements = Array.from(document.querySelectorAll("input,textarea"))
   inputElements.forEach(input=>{
-    input.addEventListener('keyup',translaterate)
     input.addEventListener('focus',translaterateSetup)
-    input.addEventListener('load',translaterateSetup)
   })
   document.addEventListener('load',()=>{
     selectElement('.UUbT9').remove()

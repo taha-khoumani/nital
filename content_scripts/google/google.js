@@ -333,6 +333,9 @@ function applyOrangeOutline() {
         }
 
       } 
+
+      // Remove dropdown on (X) click
+      selectElement('.BKRPef').addEventListener('click',()=>selectElement('.dropdown').style.display = 'none')
   
       // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
       if(!localInput.parentNode.classList.contains('nitalDropdownParent')){
