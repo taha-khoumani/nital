@@ -34,9 +34,15 @@ function applyOrangeOutline() {
     function(request, sender, sendResponse) {
       if( request.message === "on" ) {
         on();
+        // window.location.reload()
       }else if(request.message === "off"){
         off()
+        // window.location.reload()
       }
+      chrome.storage.local.get(['state'],async(result)=>{
+        const {state} = result
+        updateDualInput(state,selectElement('input'))
+      })
     }
   );
 // 
@@ -242,9 +248,6 @@ function applyOrangeOutline() {
       const localInput = e.target
       let messageBody;
 
-      // If user press Enter => Submit form (since we removed all event listiners)
-      if(e.key === 'Enter')selectElement('#search-form').submit()
-
       // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
       if(!state || state === 'off')return;
 
@@ -340,17 +343,20 @@ function applyOrangeOutline() {
 
       // Vars.
       const {selectedLanguage,state} = result
+      let localInput = e.target
 
       // Remove youtube dropdowns from document
-      let old_element = e.target;
-      const localInput = old_element.cloneNode(true);
-      old_element.parentNode.replaceChild(localInput, old_element);
+      if(state === 'on') localInput = updateDualInput(state,localInput)
+      // let old_element = e.target;
+      // const localInput = old_element.cloneNode(true);
+      // old_element.parentNode.replaceChild(localInput, old_element);
 
       // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
       wrapUpInputInitilazer(localInput)
+      console.log(localInput)
 
       // Switch focus from relative parent to input
-      localInput.focus()
+      localInput.select()
 
       // Add tabindex 0
       localInput.tabIndex = 0
@@ -362,7 +368,7 @@ function applyOrangeOutline() {
       selectElement('#search-clear-button').addEventListener('click',()=>selectElement('.dropdown').style.display = 'none')
       
       // Change typing direction based on language.
-      updateDropdownPosition(selectedLanguage,localInput)
+      updateDropdownPosition(selectedLanguage,localInput);
 
       // Add keypup event listener after input changed
       localInput.addEventListener('keyup',translaterate)
@@ -374,10 +380,29 @@ function applyOrangeOutline() {
 
   // Event listiners
   const inputElements = Array.from(document.querySelectorAll("input,textarea"))
+  let originalInput,newInput;
+  function updateDualInput(state,currentInput){
+    if(state === 'on'){
+      currentInput.parentNode.replaceChild(newInput,currentInput)
+      return newInput
+    } else if(state === 'off'){
+      currentInput.parentNode.replaceChild(originalInput,currentInput)
+      return originalInput
+    }
+  }
   inputElements.forEach(input=>{
+    // Set dual-input inital values
+    originalInput = input
+    newInput = input.cloneNode(true)
+    newInput.addEventListener('keyup',(e)=>{if(e.key === 'Enter')selectElement('#search-form').submit()}) 
+
     input.addEventListener('focus',translaterateSetup)
+
+    chrome.storage.local.get(['selectedLanguage'],async(result)=>{
+      const {selectedLanguage} = result
+      // Update typing direaction
+      selectedLanguage === ('ar' || 'ps' || 'fa' || 'ur') ? input.dir = 'rtl' : input.dir = 'ltr'
+    })
   })
-  document.addEventListener('load',()=>{
-    selectElement('.UUbT9').remove()
-  })
+  
 // 

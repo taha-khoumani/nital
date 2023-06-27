@@ -3,6 +3,8 @@ SECONDARY:
     4 - Automatically select the language and go Home onClick
     5 - Add hover effects for languages
     6 - Animate the on/off button
+    7 - Handle textarea dropdown stuff
+    8 - when off youtube enter doesn't work and dropdown don't work
 
 FINAL-STEPS:
     1 - Replace the tahak.vercel.app in buymeacoffe with the actual webExtension link
