@@ -1,9 +1,7 @@
 SECONDARY:
-    - Automatically select the language and go Home onClick: remove the save button
     - Add hover effects for languages
-    - persion and urdu not setting dir to rtl
     - on enter submit
-    - on off input.value = ''
+    - when user clicks a link that opens a new tab it takes them to google.com
 
 
 

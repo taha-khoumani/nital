@@ -83,7 +83,6 @@ function applyOrangeOutline() {
       
       // Extract the word based on the start and end positions
       const word = value.substring(start, end);
-      // console.log(word)
       return word
     }
     function getSpacedWord(inputElement) {
@@ -199,8 +198,8 @@ function applyOrangeOutline() {
       // display
       dropdown.style.display = 'block'
     }
-    function updateDropdownPosition(language,input){
-      if(language === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0')){
+    function updateDropdownPosition(language,input){console.log('updat dir')
+      if(language==='fa-t-i0'||language==='ar-t-i0'||language==='ur-t-i0'){
         input.dir = 'rtl'
         if(selectElement('.dropdown')){
           selectElement('.dropdown').style.textAlign = 'right'
@@ -227,7 +226,10 @@ function applyOrangeOutline() {
         selectElement('.nitalDropdownParent').appendChild(dropdown)
       }
     }
-
+    function updateDir(input,language,state){
+      if(state === 'off')input.dir = ''
+      else{(language==='fa-t-i0'||language==='ar-t-i0'||language==='ur-t-i0') ? input.dir = 'rtl' : input.dir = 'ltr'}
+    }
 
 
   // Vars
@@ -347,13 +349,9 @@ function applyOrangeOutline() {
 
       // Remove youtube dropdowns from document
       if(state === 'on') localInput = updateDualInput(state,localInput)
-      // let old_element = e.target;
-      // const localInput = old_element.cloneNode(true);
-      // old_element.parentNode.replaceChild(localInput, old_element);
 
       // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
       wrapUpInputInitilazer(localInput)
-      console.log(localInput)
 
       // Switch focus from relative parent to input
       localInput.select()
@@ -401,8 +399,15 @@ function applyOrangeOutline() {
     chrome.storage.local.get(['selectedLanguage'],async(result)=>{
       const {selectedLanguage} = result
       // Update typing direaction
-      selectedLanguage === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0') ? input.dir = 'rtl' : input.dir = 'ltr'
+      if(selectedLanguage==='fa-t-i0'||selectedLanguage==='ar-t-i0'||selectedLanguage==='ur-t-i0') input.dir = 'rtl'
+      else input.dir = 'ltr'
     })
+  })
+
+  // When user change language or state
+  chrome.storage.onChanged.addListener(()=>{
+    selectElement('input').value = '';
+    chrome.storage.local.get(['state','selectedLanguage'],({selectedLanguage,state})=>updateDir(selectElement('input'),selectedLanguage,state))
   })
   
 // 

@@ -23,6 +23,9 @@ chrome.runtime.onMessage.addListener(
 searchInput.addEventListener('focus',translaterateSetup)
 searchInput.addEventListener('keyup',translaterate)
 
+// When user change language or state
+chrome.storage.onChanged.addListener(()=>{searchInput.value = ''})
+
 
 
 
@@ -58,7 +61,7 @@ function translaterate(e){
   chrome.storage.local.get(['selectedLanguage','state'],async(result)=>{
 
     // Vars.
-    const {selectedLanguage,state} = result
+    const {selectedLanguage,state} = result;
     const localInput = e.target
     let messageBody;
 
@@ -167,7 +170,7 @@ function translaterateSetup(e){
     if(!state || state === 'off')return;
     
     // Change typing direction based on language.
-    if(selectedLanguage === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0')){
+    if(selectedLanguage==='fa-t-i0'||selectedLanguage==='ar-t-i0'||selectedLanguage==='ur-t-i0'){
       localInput.dir = 'rtl'
       if(selectElement('.dropdown')){
         selectElement('.dropdown').style.textAlign = 'right'
@@ -337,5 +340,5 @@ function removeOrangeOutline() {
 }
 function updateDir(input,language,state){
   if(state === 'off')input.dir = ''
-  else{language === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0') ? input.dir = 'rtl' : input.dir = 'ltr'}
+  else{(language==='fa-t-i0'||language==='ar-t-i0'||language==='ur-t-i0') ? input.dir = 'rtl' : input.dir = 'ltr'}
 }

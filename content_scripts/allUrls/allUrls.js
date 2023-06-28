@@ -321,7 +321,7 @@
       if(!state || state === 'off')return;
       
       // Change typing direction based on language.
-      if(selectedLanguage === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0')){
+      if(selectedLanguage==='fa-t-i0'||selectedLanguage==='ar-t-i0'||selectedLanguage==='ur-t-i0'){
         localInput.dir = 'rtl'
         if(selectElement('.dropdown')){
           selectElement('.dropdown').style.textAlign = 'right'
@@ -363,7 +363,5 @@
     input.addEventListener('focus',translaterateSetup)
     input.addEventListener('load',translaterateSetup)
   })
-  document.addEventListener('load',()=>{
-    selectElement('.UUbT9').remove()
-  })
+
 // 

@@ -22,9 +22,9 @@
     function goToGoolgeIfOnHome(){
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             const tab = tabs[0];
-            if (!tab.url || tab.url === "chrome://newtab/") {
-            chrome.tabs.update({ url: "https://www.google.com" });
-            }
+            if (tab.url === "chrome://newtab/")chrome.tabs.update({ url: "https://www.google.com" });
+            // setTimeout(()=>{// if (tab.url === "chrome://newtab/")chrome.tabs.update({ url: "https://www.google.com" });// },10)
+
         }); 
     }
 
@@ -52,9 +52,8 @@
 
 // ON-NEW-TAB
     chrome.tabs.onCreated.addListener(function(tab) {
-        if (!tab.url || tab.url === "chrome://newtab/") {
-            checkGoogle()
-        }
+        if (tab.url === "chrome://newtab/")checkGoogle()
+        // setTimeout(()=>{if (tab.url === "chrome://newtab/")checkGoogle()},10)
     });
 
 // 
@@ -101,6 +100,7 @@
         if(message.translateration !== true) return;
 
         const {text,to,n} = message
+        // const finalN = n === 1 ? 1 : 10
         const url = `https://inputtools.google.com/request?itc=${to}&num=${n}&text=${text}`
 
         fetch(url)

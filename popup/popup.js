@@ -40,11 +40,11 @@
         }); 
     }
     
-    function goToHomeIfOnGoogle(){
+    function goToHomeIfOnGoogle(callback){
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             const tab = tabs[0];
             if (tab.url === "https://www.google.com/") {
-              chrome.tabs.update({ url: "chrome://newtab/" });
+              chrome.tabs.update({ url: "chrome://newtab/" },callback);
             }
         }); 
     }
@@ -61,12 +61,11 @@
 
 
 
-// HOME-TO-LANGUAGES_SELECT-TOGGLING
+// NAVIGATION
     // Variables
     const home = selectElement("#home")
     const currentLanguageShownContainer = selectElement("#currentLanguageShownContainer")
     const languagesSection = selectElement("#language-selection")
-    const saveButton = selectElement("#save-languages")
     const form = selectElement("#languagesForm")
  
     // 1TimesRuns
@@ -79,7 +78,6 @@
 
         removeAddClass(languagesSection,"hidden","flex")
         removeAddClass(home,"flex","hidden")
-        saveButton.innerText = "Go back"
 
         // scroll to selected language
         selectElement(`#${selectedLanguage}`).scrollIntoView()
@@ -100,7 +98,6 @@
 
     // Dom
     currentLanguageShownContainer.addEventListener('click',goToLanguagesSection)
-    saveButton.addEventListener('click',onSavePopup)
 //
 
 
@@ -117,10 +114,7 @@
             selectedLanguage = result.selectedLanguage
 
             // if it's the user first visit
-            if(!selectedLanguage){
-                saveButton.innerText = "Continue"
-                return
-            } 
+            if(!selectedLanguage)return; 
 
             // Conditional variables 
             const radioButtonMatchingCurrentLanguage = languagesInputs.find(language=> language.value === selectedLanguage )
@@ -161,6 +155,9 @@
 
         // Go back home
         onSavePopup()
+
+        // Close popup
+        window.close()
     }
 
     // Dom
@@ -229,7 +226,7 @@
             chrome.tabs.sendMessage(activeTab.id, {message: "off"},handleError);
         });
     }
-    function onOffPopup(){
+    async function onOffPopup(){
         // Update global variable
         state = "off"
 
@@ -244,12 +241,35 @@
         // Navigate to Home if needed
         checkGoogle()
     } 
+    function onOffPopupAndCloseWindow(){
+        // Update global variable
+        state = "off"
+
+        // Store to localStorage
+        chrome.storage.local.set({state:"off"})
+
+        // Update UI
+        removeAddClass(on,'state',false)
+        removeAddClass(off,false,'state')
+        removeAddClass(currentLanguageShownContainer,false,'disabled')
+
+        // Navigate to Home if needed
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            const tab = tabs[0];
+            if (tab.url === "https://www.google.com/") {
+              chrome.tabs.update({ url: "chrome://newtab/" },()=>window.close());
+            }else{
+                window.close()
+            }
+        }); 
+    }
+    
 
     // Dom
     document.addEventListener("DOMContentLoaded", ()=>on.addEventListener("click", onOnUI));
     on.addEventListener('click',onOnPopup)
     document.addEventListener("DOMContentLoaded", ()=>off.addEventListener("click", onOffUI));
-    off.addEventListener('click',onOffPopup)
+    off.addEventListener('click',onOffPopupAndCloseWindow)
 
 // 
 
