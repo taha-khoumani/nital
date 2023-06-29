@@ -3,6 +3,7 @@ let lastTransliterationChoice = {original:'',translateration:'',}
 const searchInput = selectElement('#APjFqb')
 const reportInappropriatePredictions = selectElement('.M8H8pb')
 const googleDefaultDropdown =   selectElement('.UUbT9')
+const googleForm = selectElement('[role="search"]')
 
 // On load: if on run the script
 chrome.storage.local.get('state',(result) => { if(result.state === "on")on() })
@@ -64,6 +65,9 @@ function translaterate(e){
     const {selectedLanguage,state} = result;
     const localInput = e.target
     let messageBody;
+
+    // Since the enter key doesn't work
+    if(e.key === 'Enter')googleForm.submit()
 
     // If it's the user first visit or extension is OFF or the user haven't finished typing the word: return.
     if(!state || state === 'off')return;
@@ -189,7 +193,7 @@ function translaterateSetup(e){
     } 
 
     // Remove dropdown on (X) click
-    selectElement('.BKRPef').addEventListener('click',()=>selectElement('.dropdown').style.display = 'none')
+    selectElement('.BKRPef').addEventListener('click',()=>{searchInput.value ='';selectElement('.dropdown').style.display = 'none'})
 
     // If not already: wrap input with div with position relative, create dropdown element, append it to relative parent
     if(!localInput.parentNode.classList.contains('nitalDropdownParent')){
@@ -236,13 +240,12 @@ function updateDropDown(input,choices){
     const pElement = elementClassInner('p','dropdownChoice',choice)
     pElement.tabIndex = index + 1
     pElement.cursor = 'default'
-
       pElement.addEventListener('click',()=>{
         input.value = input.value.replace(getCurrentWord(input),choice) + " "
         dropdown.style.display = 'none'
         input.focus()
       })
-      pElement.addEventListener('keyup',(e)=>{if(e.key ==='Enter' || e.key === ' ')e.target.click()})
+      pElement.addEventListener('keyup',(e)=>{ if(e.key === 'Enter')e.target.click() })
 
     dropdown.appendChild(pElement)
   })

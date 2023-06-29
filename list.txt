@@ -1,7 +1,6 @@
 SECONDARY:
     - Add hover effects for languages
-    - on enter submit
-    - when user clicks a link that opens a new tab it takes them to google.com
+    - Scroll to top after space
 
 
 
@@ -12,6 +11,8 @@ FINAL-STEPS:
 
 
 FUTURE-FEATURES:
+
+    - Stop the scrolling when pressing space to auto complete
 
     - SUBSCRIPTIONS:
     <!-- character-left-counter -->

@@ -185,7 +185,7 @@
           dropdown.style.display = 'none'
           input.focus()
         })
-        pElement.addEventListener('keyup',(e)=>{if(e.key ==='Enter' || e.key === ' ')e.target.click()})
+        pElement.addEventListener('keyup',(e)=>{ if(e.key === 'Enter')e.target.click() })
       // 
       dropdown.appendChild(pElement)
     })

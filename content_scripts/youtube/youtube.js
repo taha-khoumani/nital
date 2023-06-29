@@ -183,11 +183,7 @@ function applyOrangeOutline() {
             dropdown.style.display = 'none'
             input.focus()
           })
-          pElement.addEventListener('keyup',(e)=>{
-            if(e.key ==='Enter' || e.key === ' ')e.target.click()
-            // else if (e.key === 'ArrowDown') e.target.nextSibling.focus()
-            // else if (e.key === 'ArrowUp') e.target.previousSibling ? e.target.previousSibling.focus() : input.focus()
-          })
+          pElement.addEventListener('keyup',(e)=>{ if(e.key === 'Enter')e.target.click() })
         // 
         dropdown.appendChild(pElement)
       })
@@ -379,6 +375,7 @@ function applyOrangeOutline() {
   // Event listiners
   const inputElements = Array.from(document.querySelectorAll("input,textarea"))
   let originalInput,newInput;
+  const youtubeForm = selectElement('#search-form')
   function updateDualInput(state,currentInput){
     if(state === 'on'){
       currentInput.parentNode.replaceChild(newInput,currentInput)
