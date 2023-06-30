@@ -321,7 +321,7 @@
       if(!state || state === 'off')return;
       
       // Change typing direction based on language.
-      if(selectedLanguage === ('ar' || 'ps' || 'fa' || 'ur')){
+      if(selectedLanguage === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0')){
         localInput.dir = 'rtl'
         if(selectElement('.dropdown')){
           selectElement('.dropdown').style.textAlign = 'right'

@@ -101,7 +101,7 @@
         if(message.translateration !== true) return;
 
         const {text,to,n} = message
-        const url = `https://inputtools.google.com/request?itc=${to}-t-i0&num=${n}&text=${text}`
+        const url = `https://inputtools.google.com/request?itc=${to}&num=${n}&text=${text}`
 
         fetch(url)
         .then(res=>res.json())

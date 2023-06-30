@@ -200,7 +200,7 @@ function applyOrangeOutline() {
       dropdown.style.display = 'block'
     }
     function updateDropdownPosition(language,input){
-      if(language === ('ar' || 'ps' || 'fa' || 'ur')){
+      if(language === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0')){
         input.dir = 'rtl'
         if(selectElement('.dropdown')){
           selectElement('.dropdown').style.textAlign = 'right'
@@ -401,7 +401,7 @@ function applyOrangeOutline() {
     chrome.storage.local.get(['selectedLanguage'],async(result)=>{
       const {selectedLanguage} = result
       // Update typing direaction
-      selectedLanguage === ('ar' || 'ps' || 'fa' || 'ur') ? input.dir = 'rtl' : input.dir = 'ltr'
+      selectedLanguage === ('ar-t-i0' || 'fa-t-i0' || 'ur-t-i0') ? input.dir = 'rtl' : input.dir = 'ltr'
     })
   })
   

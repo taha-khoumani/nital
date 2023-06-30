@@ -158,7 +158,9 @@
 
         // Scroll to selected element
         selectElement(`#${clickedLanguage}`).scrollIntoView()
-        
+
+        // Go back home
+        onSavePopup()
     }
 
     // Dom

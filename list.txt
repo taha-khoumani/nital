@@ -1,50 +1,62 @@
 SECONDARY:
-    2 - Change the input direction right when the user load the page or select a new language instad of onInput
-    4 - Automatically select the language and go Home onClick
-    5 - Add hover effects for languages
-    6 - Animate the on/off button
-    7 - Handle textarea dropdown stuff
-    8 - when off youtube enter doesn't work and dropdown don't work
+    - Automatically select the language and go Home onClick: remove the save button
+    - Add hover effects for languages
+    - persion and urdu not setting dir to rtl
+    - on enter submit
+    - on off input.value = ''
+
+
 
 FINAL-STEPS:
     1 - Replace the tahak.vercel.app in buymeacoffe with the actual webExtension link
 
 
 
-"exclude_matches": [
-    "https://www.google.com/",
-    "https://www.youtube.com/"
-],
+
+FUTURE-FEATURES:
+
+    - SUBSCRIPTIONS:
+    <!-- character-left-counter -->
+    <p class="text-black text-sm">Number of characters to translate left: 2000</p>
+    <!-- premium -->
+    <div class="flex flex-col gap-2 items-center">
+        <p class="text-sm text-black">Want unlimited characters to translate ?</p>
+        <button class="bg-orange rounded-full w-full text-white text-sm py-2 border-2 hover:bg-white hover:text-orange hover:border-orange transition">GO PREMIUM !</button>
+        <p class="text-sm text-black">
+            Already have an account ?
+            <a class="ml-11 text-link underline" href="">Log in</a>
+        </p>
+    </div>
+    <!-- seperator -->
+    <div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
 
 
-
-
-
-
-
-
-<!-- character-left-counter -->
-<p class="text-black text-sm">Number of characters to translate left: 2000</p>
-
-<!-- premium -->
-<div class="flex flex-col gap-2 items-center">
-    <p class="text-sm text-black">Want unlimited characters to translate ?</p>
-    <button class="bg-orange rounded-full w-full text-white text-sm py-2 border-2 hover:bg-white hover:text-orange hover:border-orange transition">GO PREMIUM !</button>
-    <p class="text-sm text-black">
-        Already have an account ?
-        <a class="ml-11 text-link underline" href="">Log in</a>
-    </p>
-</div>
-
-<!-- seperator -->
-<div class="bg-black bg-opacity-75 h-2px w-full rounded-full"></div>
-
-
-ryNqvb
-
-TRANSLATION-STYLES
-    - after space
-    - live but translatedText is only dropdown
-    - after shortcut
-
-    -combination of dropdown and after space
+    - SEE_IF_WE_CAN_USE_THESE_LANGUAGES:
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="zh-Hant" id="zh-Hant">
+        <label class="language-label" for="zh-Hant">Chinese (Traditional) / 中文 (繁體)</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="km" id="km">
+        <label class="language-label" for="km">Khmer / ភាសាខ្មែរ</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="ko" id="ko">
+        <label class="language-label" for="ko">Korean / 한국어</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="ps" id="ps">
+        <label class="language-label" for="ps">Pashto / پښتو</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="sd" id="sd">
+        <label class="language-label" for="sd">Sindhi / سنڌي</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="uz" id="uz">
+        <label class="language-label" for="uz">Uzbek / Oʻzbek</label>
+    </div> -->
+    <!-- <div class="language">
+        <input class="language-box" type="radio" name="language" value="my" id="my">
+        <label class="language-label" for="my">Burmese / ဗမာ</label>
+    </div> -->
